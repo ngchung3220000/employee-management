@@ -1,16 +1,5 @@
 export const SUCCESS = 200;
 
-export const GENDER = [
-  { id: "0", name: "Nam" },
-  { id: "1", name: "Nữ" },
-];
-
-export const TEAMS = [
-  { value: 1, name: "Nhóm 1" },
-  { value: 2, name: "Nhóm 2" },
-  { value: 3, name: "Nhóm 3" },
-];
-
 export const STATUSES = {
   1: "Lưu mới",
   2: "Chờ xử lý",
@@ -35,7 +24,6 @@ export const STATUSES = {
 export const EDIT_STATUSES = {
   1: "Lưu mới",
   4: "Yêu cầu bổ sung",
-  6: "Từ chối",
 };
 
 export const VIEW_DETAILS_STATUSES = {
