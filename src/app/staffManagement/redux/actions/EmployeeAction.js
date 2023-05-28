@@ -1,4 +1,6 @@
 import {
+  ADDITIONAL_REQUESTED,
+  ADDITIONAL_REQUESTED_SUCCEEDED,
   ADD_EMPLOYEE_FAILED,
   ADD_EMPLOYEE_REQUESTED,
   ADD_EMPLOYEE_SUCCEEDED,
@@ -11,6 +13,10 @@ import {
   GET_ALL_EMPLOYEE_FAILED,
   GET_ALL_EMPLOYEE_REQUESTED,
   GET_ALL_EMPLOYEE_SUCCEEDED,
+  GET_FORM_EMPLOYEE,
+  GET_FORM_EMPLOYEE_SUCCEEDED,
+  GET_TOTAL_EMPLOYEE,
+  GET_TOTAL_EMPLOYEE_SUCCEEDED,
   RESET_EMPLOYEE,
   RESET_EMPLOYEE_SUCCEEDED,
   SET_EMPLOYEE,
@@ -18,14 +24,14 @@ import {
 } from "../constants/employeeConstant";
 
 // ROW DATA
-export const setEmployeeAction = (payload) => {
+export const getEmployeeById = (payload) => {
   return {
     type: SET_EMPLOYEE,
     payload: payload,
   };
 };
 
-export const setEmployeeActionSucceeded = (payload) => {
+export const getEmployeeByIdSucceeded = (payload) => {
   return {
     type: SET_EMPLOYEE_SUCCEEDED,
     payload: payload,
@@ -42,6 +48,20 @@ export const resetEmployeeAction = (payload) => {
 export const resetEmployeeActionSucceeded = (payload) => {
   return {
     type: RESET_EMPLOYEE_SUCCEEDED,
+    payload: payload,
+  };
+};
+
+export const getTotalEmployeeCountRequested = (payload) => {
+  return {
+    type: GET_TOTAL_EMPLOYEE,
+    payload: payload,
+  };
+};
+
+export const getTotalEmployeeCountSucceeded = (payload) => {
+  return {
+    type: GET_TOTAL_EMPLOYEE_SUCCEEDED,
     payload: payload,
   };
 };
@@ -130,6 +150,37 @@ export const deleteEmployeeSucceeded = (payload) => {
 export const deleteEmployeeFailed = (payload) => {
   return {
     type: DELETE_EMPLOYEE_FAILED,
+    payload: payload,
+  };
+};
+
+// GET FORM EMPLOYEE
+export const getFormEmployeeRequested = (payload) => {
+  return {
+    type: GET_FORM_EMPLOYEE,
+    payload: payload,
+  };
+};
+
+export const getFormEmployeeSucceeded = (payload) => {
+  return {
+    type: GET_FORM_EMPLOYEE_SUCCEEDED,
+    payload: payload,
+  };
+};
+
+// ADDITIONAL REQUEST
+
+export const additionalRequest = (payload) => {
+  return {
+    type: ADDITIONAL_REQUESTED,
+    payload: payload,
+  };
+};
+
+export const additionalRequestSucceeded = (payload) => {
+  return {
+    type: ADDITIONAL_REQUESTED_SUCCEEDED,
     payload: payload,
   };
 };

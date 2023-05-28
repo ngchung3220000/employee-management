@@ -12,18 +12,6 @@ export const navigations = [
     isVisible: true,
     icon: "engineering",
     children: [
-      // {
-      //   name: "Dashboard.eQAActivityLog",
-      //   isVisible: true,
-      //   path: ConstantList.ROOT_PATH + "user_manager/activity_log",
-      //   icon: "keyboard_arrow_right",
-      // },
-      // {
-      //   name: "manage.menu",
-      //   isVisible: true,
-      //   path: ConstantList.ROOT_PATH + "list/menu",
-      //   icon: "keyboard_arrow_right",
-      // },
       {
         name: "manage.user",
         isVisible: true,
@@ -34,6 +22,26 @@ export const navigations = [
         name: "manage.employee",
         isVisible: true,
         path: ConstantList.ROOT_PATH + "list/employee",
+        icon: "keyboard_arrow_right",
+      },
+    ],
+  },
+
+  {
+    name: "Dashboard.leader",
+    isVisible: true,
+    icon: "engineering",
+    children: [
+      {
+        name: "manage.pending",
+        isVisible: true,
+        path: ConstantList.ROOT_PATH + "leader/pending",
+        icon: "keyboard_arrow_right",
+      },
+      {
+        name: "manage.approved",
+        isVisible: true,
+        path: ConstantList.ROOT_PATH + "leader/approved",
         icon: "keyboard_arrow_right",
       },
     ],

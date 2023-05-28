@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MaterialTable from "material-table";
-import {
-  Button,
-  Grid,
-  Icon,
-  IconButton,
-  TablePagination,
-} from "@material-ui/core";
+import { Button, Grid, Icon, IconButton } from "@material-ui/core";
 import moment from "moment";
 import { Breadcrumb } from "egret";
 import { toast } from "react-toastify";
@@ -16,10 +10,10 @@ import DialogDelete from "../dialog/DialogDelete";
 import {
   deleteEmployeeRequested,
   getAllEmployeeRequested,
+  getTotalEmployeeCountRequested,
   resetEmployeeAction,
-  setEmployeeAction,
+  getEmployeeById,
 } from "../../redux/actions/EmployeeAction";
-import { getTotalEmployeeCount } from "app/staffManagement/api/EmployeeServices";
 import {
   DELETE_STATUS,
   EDIT_STATUSES,
@@ -29,6 +23,7 @@ import {
 } from "app/staffManagement/constants/constants";
 import "react-toastify/dist/ReactToastify.css";
 import { GENDER } from "../constains";
+import Pagination from "app/staffManagement/components/Pagination/Pagination";
 
 toast.configure({
   autoClose: 2000,
@@ -39,14 +34,15 @@ toast.configure({
 function Employee() {
   const dispatch = useDispatch();
   const listEmployee = useSelector((state) => state.employee.listEmployee);
-
+  const totalEmployeeCount = useSelector(
+    (state) => state.employee.totalEmployeeCount
+  );
   const [dialogSubmit, setDialogSubmit] = useState(false);
   const [dialogDelete, setDialogDelete] = useState(false);
   const [idEmployee, setIdEmployee] = useState();
   const [page, setPage] = useState(0);
   const [rowPerPage, setRowPerPage] = useState(10);
   const [reloadData, setReloadData] = useState(false);
-  const [totalEmployeeCount, setTotalEmployeeCount] = useState();
 
   useEffect(() => {
     dispatch(
@@ -57,9 +53,7 @@ function Employee() {
       })
     );
 
-    getTotalEmployeeCount(STATUS_OF_ADD_EMPLOYEE).then((res) =>
-      setTotalEmployeeCount(res?.data?.data)
-    );
+    dispatch(getTotalEmployeeCountRequested(STATUS_OF_ADD_EMPLOYEE));
   }, [dispatch, page, rowPerPage, reloadData]);
 
   const handleOpenDialogDelete = (rowData) => {
@@ -85,7 +79,7 @@ function Employee() {
     );
     if (condition) {
       // Get employee by id
-      dispatch(setEmployeeAction(rowData.employeeId));
+      dispatch(getEmployeeById(rowData.employeeId));
       setDialogSubmit(true);
     } else {
       toast.warning(
@@ -98,15 +92,6 @@ function Employee() {
     dispatch(resetEmployeeAction({}));
     setDialogSubmit(false);
     setReloadData(!reloadData);
-  };
-
-  const handleChangeRowPerPage = (e) => {
-    setRowPerPage(e.target.value);
-    setPage(0);
-  };
-
-  const handleChangePage = (e, newPage) => {
-    setPage(newPage);
   };
 
   const handleViewDetails = (rowData) => {
@@ -175,7 +160,6 @@ function Employee() {
       title: "Giới tính",
       field: "gender",
       render: (rowData) => {
-        // eslint-disable-next-line array-callback-return
         return GENDER.map((item) => {
           if (+item.id === rowData.gender) {
             return item.name;
@@ -196,7 +180,7 @@ function Employee() {
   ];
 
   return (
-    <div style={{ margin: "10px" }}>
+    <div className="m-sm-30">
       <div style={{ marginBottom: "20px" }}>
         <Breadcrumb
           routeSegments={[
@@ -254,25 +238,12 @@ function Employee() {
             />
           )}
         </Grid>
-        <TablePagination
-          component="div"
-          style={{
-            width: "100%",
-            position: "fixed",
-            bottom: "0px",
-            right: "10px",
-          }}
-          rowsPerPageOptions={[5, 10, 20]}
+        <Pagination
           page={page}
-          count={totalEmployeeCount || Number()}
-          rowsPerPage={rowPerPage}
-          labelRowsPerPage={"Số hàng mỗi trang:"}
-          labelDisplayedRows={({ from, to, count }) =>
-            `${from}-${to} ${"trong"} 
-            ${count}`
-          }
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowPerPage}
+          setPage={setPage}
+          rowPerPage={rowPerPage}
+          setRowPerPage={setRowPerPage}
+          totalEmployeeCount={totalEmployeeCount}
         />
       </Grid>
     </div>
