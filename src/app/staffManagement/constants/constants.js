@@ -31,8 +31,10 @@ export const VIEW_DETAILS_STATUSES = {
   3: "Chờ duyệt",
 };
 
-export const DELETE_STATUS = "1";
-export const ADDITIONAL_REQUESTED_STATUS = "4";
-
 export const STATUS_OF_ADD_EMPLOYEE = "1,2,4,6";
 export const STATUS_OF_PENDING = "3";
+
+export const DELETE_STATUS = 1;
+export const ADDITIONAL_REQUESTED_STATUS = 4;
+export const APPROVE_STATUS = 5;
+export const REJECT_STATUS = 6;

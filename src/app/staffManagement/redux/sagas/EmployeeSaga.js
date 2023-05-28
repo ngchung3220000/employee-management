@@ -15,7 +15,7 @@ import {
 } from "../actions/EmployeeAction";
 import {
   addEmployee,
-  additionalRequest,
+  leaderAction,
   deleteEmployee,
   editEmployee,
   getAllEmployeeByStatus,
@@ -27,7 +27,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { SUCCESS } from "app/staffManagement/constants/constants";
 import {
-  ADDITIONAL_REQUESTED,
+  LEADER_ACTION_REQUESTED,
   ADD_EMPLOYEE_REQUESTED,
   DELETE_EMPLOYEE_REQUESTED,
   EDIT_EMPLOYEE_REQUESTED,
@@ -150,10 +150,10 @@ export function* fetchGetFormEmployee(action) {
   }
 }
 
-export function* fetchAdditionalRequest(action) {
+export function* fetchLeaderAction(action) {
   try {
     const result = yield call(
-      additionalRequest,
+      leaderAction,
       action.payload.id,
       action.payload.data
     );
@@ -176,5 +176,5 @@ export default function* rootEmployeeSaga() {
   yield takeEvery(EDIT_EMPLOYEE_REQUESTED, fetchEditEmployee);
   yield takeEvery(DELETE_EMPLOYEE_REQUESTED, fetchDeleteEmployee);
   yield takeEvery(GET_FORM_EMPLOYEE, fetchGetFormEmployee);
-  yield takeEvery(ADDITIONAL_REQUESTED, fetchAdditionalRequest);
+  yield takeEvery(LEADER_ACTION_REQUESTED, fetchLeaderAction);
 }

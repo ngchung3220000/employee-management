@@ -57,7 +57,7 @@ function Employee() {
   }, [dispatch, page, rowPerPage, reloadData]);
 
   const handleOpenDialogDelete = (rowData) => {
-    const condition = DELETE_STATUS === rowData?.status.toString();
+    const condition = DELETE_STATUS === rowData?.status;
 
     if (condition) {
       setDialogDelete(true);

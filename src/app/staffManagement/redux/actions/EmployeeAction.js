@@ -1,6 +1,6 @@
 import {
-  ADDITIONAL_REQUESTED,
-  ADDITIONAL_REQUESTED_SUCCEEDED,
+  LEADER_ACTION_REQUESTED,
+  LEADER_ACTION_SUCCEEDED,
   ADD_EMPLOYEE_FAILED,
   ADD_EMPLOYEE_REQUESTED,
   ADD_EMPLOYEE_SUCCEEDED,
@@ -171,16 +171,16 @@ export const getFormEmployeeSucceeded = (payload) => {
 
 // ADDITIONAL REQUEST
 
-export const additionalRequest = (payload) => {
+export const leaderActionRequest = (payload) => {
   return {
-    type: ADDITIONAL_REQUESTED,
+    type: LEADER_ACTION_REQUESTED,
     payload: payload,
   };
 };
 
-export const additionalRequestSucceeded = (payload) => {
+export const leaderActionSucceeded = (payload) => {
   return {
-    type: ADDITIONAL_REQUESTED_SUCCEEDED,
+    type: LEADER_ACTION_SUCCEEDED,
     payload: payload,
   };
 };

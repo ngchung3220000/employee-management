@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import {
   Button,
   Dialog,
@@ -9,28 +10,27 @@ import {
   IconButton,
 } from "@material-ui/core";
 import ApproveDialog from "./Dialog/ApproveDialog";
-import RefuseDialog from "./Dialog/RefuseDialog";
+import RejectDialog from "./Dialog/RejectDialog";
 import AdditionalRequestDialog from "./Dialog/AdditionalRequestDialog";
 
 export default function PendingDialog(props) {
   const { open, setDialogSubmit, reloadData, setReloadData } = props;
-
+  const formEmployee = useSelector((state) => state.employee.formEmployee);
   const [dialogApprove, setDialogApprove] = useState(false);
   const [dialogAdditionalRequest, setDialogAdditionalRequest] = useState(false);
-  const [dialogRefuse, setDialogRefuse] = useState(false);
+  const [dialogReject, setDialogReject] = useState(false);
+
+  const handleCloseDialog = () => {
+    setDialogSubmit(false);
+  };
 
   return (
-    <Dialog
-      fullWidth
-      maxWidth="md"
-      open={open}
-      onClose={() => setDialogSubmit(false)}
-    >
+    <Dialog fullWidth maxWidth="md" open={open} onClose={handleCloseDialog}>
       <DialogTitle style={{ paddingBottom: "10px" }}>
         <span style={{ color: "#1d6d1e" }}>Thông tin nhân viên</span>
         <IconButton
           style={{ position: "absolute", right: "10px", top: "10px" }}
-          onClick={() => {}}
+          onClick={handleCloseDialog}
         >
           <Icon color="error">close</Icon>
         </IconButton>
@@ -44,7 +44,7 @@ export default function PendingDialog(props) {
             variant="contained"
             className="mr-12"
             style={{ backgroundColor: "red", color: "white" }}
-            onClick={() => setDialogRefuse(true)}
+            onClick={() => setDialogReject(true)}
           >
             Từ chối
           </Button>
@@ -62,7 +62,7 @@ export default function PendingDialog(props) {
             variant="contained"
             className="mr-12"
             color="default"
-            onClick={() => {}}
+            onClick={handleCloseDialog}
           >
             Hủy
           </Button>
@@ -71,25 +71,39 @@ export default function PendingDialog(props) {
             variant="contained"
             className="mr-12"
             color="primary"
-            onClick={() => setDialogApprove(false)}
+            onClick={() => setDialogApprove(true)}
           >
             Phê duyệt
           </Button>
         </div>
       </DialogActions>
 
-      {dialogApprove && <ApproveDialog />}
+      {dialogApprove && (
+        <ApproveDialog
+          dialogApprove={dialogApprove}
+          setDialogApprove={setDialogApprove}
+          reloadData={reloadData}
+          setReloadData={setReloadData}
+        />
+      )}
 
       {dialogAdditionalRequest && (
         <AdditionalRequestDialog
-          open={dialogAdditionalRequest}
+          dialogAdditionalRequest={dialogAdditionalRequest}
           setDialogAdditionalRequest={setDialogAdditionalRequest}
           reloadData={reloadData}
           setReloadData={setReloadData}
         />
       )}
 
-      {dialogRefuse && <RefuseDialog />}
+      {dialogReject && (
+        <RejectDialog
+          dialogReject={dialogReject}
+          setDialogReject={setDialogReject}
+          reloadData={reloadData}
+          setReloadData={setReloadData}
+        />
+      )}
     </Dialog>
   );
 }

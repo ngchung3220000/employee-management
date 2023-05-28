@@ -11,28 +11,32 @@ import {
   TextField,
 } from "@material-ui/core";
 import { ADDITIONAL_REQUESTED_STATUS } from "app/staffManagement/constants/constants";
-import { additionalRequest } from "app/staffManagement/redux/actions/EmployeeAction";
+import { leaderActionRequest } from "app/staffManagement/redux/actions/EmployeeAction";
 
 export default function AdditionalRequestDialog(props) {
-  const { open, setDialogAdditionalRequest, reloadData, setReloadData } = props;
+  const {
+    dialogAdditionalRequest,
+    setDialogAdditionalRequest,
+    reloadData,
+    setReloadData,
+  } = props;
   const dispatch = useDispatch();
-  const employeeReducer = useSelector((state) => state.employee.employee);
+  const formEmployee = useSelector((state) => state.employee.formEmployee);
   const [statusLog, setStatusLog] = useState("");
-  console.log(employeeReducer);
 
-  const handleChangStatus = (e) => {
+  const handleChangStatusLog = (e) => {
     setStatusLog(e.target.value);
   };
 
   const handleOnSubmit = () => {
     const data = {
-      status: +ADDITIONAL_REQUESTED_STATUS,
+      status: ADDITIONAL_REQUESTED_STATUS,
       statusLog: statusLog,
     };
 
     dispatch(
-      additionalRequest({
-        id: employeeReducer.employeeInfo.employeeId,
+      leaderActionRequest({
+        id: formEmployee.employeeId,
         data: data,
       })
     );
@@ -47,7 +51,12 @@ export default function AdditionalRequestDialog(props) {
   };
 
   return (
-    <Dialog fullWidth maxWidth="sm" open={open} onClose={handleClose}>
+    <Dialog
+      fullWidth
+      maxWidth="sm"
+      open={dialogAdditionalRequest}
+      onClose={handleClose}
+    >
       <DialogTitle>
         <span>Yêu cầu bổ sung</span>
         <IconButton
@@ -68,7 +77,7 @@ export default function AdditionalRequestDialog(props) {
           label="Nội dung"
           variant="outlined"
           value={statusLog}
-          onChange={handleChangStatus}
+          onChange={handleChangStatusLog}
           error={!statusLog}
           helperText={statusLog ? "" : "Vui lòng nhập nội dung"}
         />
