@@ -26,6 +26,7 @@ import {
 import { FORMAT_DATE_SUBMIT } from "../constains";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import EmployeeRegistDialog from "./EmployeeRegistDialog";
 
 toast.configure({
   autoClose: 2000,
@@ -75,6 +76,8 @@ export default function EmployeeDialogSubmit(props) {
   const [employee, setEmployeeInfo] = useState({});
   const [listCertificate, setListCertificate] = useState([]);
   const [listFamilyRelation, setListFamilyRelation] = useState([]);
+
+  const [openRegistDialog, setOpenRegistDialog] = useState(false);
 
   useEffect(() => {
     if (employeeReducer.employeeInfo.employeeId) {
@@ -169,6 +172,20 @@ export default function EmployeeDialogSubmit(props) {
               setListFamilyRelation={setListFamilyRelation}
             />
           </TabPanel>
+          <TabPanel value={tab} index={1}>
+            <CertificateForm
+              listCertificate={listCertificate}
+              setListCertificate={setListCertificate}
+            />
+          </TabPanel>
+          <TabPanel value={tab} index={2}>
+            <FamilyRelationshipForm
+              listFamilyRelation={listFamilyRelation}
+              setListFamilyRelation={setListFamilyRelation}
+            />
+          </TabPanel>
+
+          {openRegistDialog && <EmployeeRegistDialog />}
         </DialogContent>
 
         <DialogActions>
@@ -178,7 +195,7 @@ export default function EmployeeDialogSubmit(props) {
               variant="contained"
               className="mr-12"
               color="secondary"
-              onClick={() => {}}
+              onClick={() => setOpenRegistDialog(true)}
             >
               Đăng ký
             </Button>

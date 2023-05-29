@@ -69,6 +69,7 @@ const EmployeeReducer = (state = initialState, action) => {
 
     case ADD_EMPLOYEE_SUCCEEDED:
     case EDIT_EMPLOYEE_SUCCEEDED:
+      console.log("payload reducer", action);
       return {
         ...state,
         loading: false,

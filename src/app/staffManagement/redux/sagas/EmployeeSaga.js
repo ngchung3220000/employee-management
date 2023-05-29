@@ -97,7 +97,7 @@ function* fetchAddEmployee(action) {
   try {
     const result = yield call(addEmployee, action.payload);
     if (result?.data?.code === SUCCESS) {
-      yield put(addEmployeeSucceeded());
+      yield put(addEmployeeSucceeded(action.payload));
       toast.success(result?.data?.message);
     } else {
       yield put(addEmployeeFailed());
@@ -111,7 +111,7 @@ function* fetchEditEmployee(action) {
   try {
     const result = yield call(editEmployee, action.payload);
     if (result?.data?.code === SUCCESS) {
-      yield put(editEmployeeSucceeded());
+      yield put(editEmployeeSucceeded(action.payload));
       toast.success(result?.data?.message);
     } else {
       yield put(editEmployeeFailed());
