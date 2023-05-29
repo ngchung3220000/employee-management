@@ -113,34 +113,23 @@ function Employee() {
       render: (rowData) => {
         return (
           <div className="none_wrap">
-            <div>
-              <IconButton
-                size="small"
-                onClick={() => handleEditEmployee(rowData)}
-              >
-                <Icon color="primary">edit</Icon>
-              </IconButton>
+            <IconButton
+              size="small"
+              onClick={() => handleEditEmployee(rowData)}
+            >
+              <Icon color="primary">edit</Icon>
+            </IconButton>
 
-              <IconButton
-                size="small"
-                onClick={() => handleOpenDialogDelete(rowData)}
-              >
-                <Icon style={{ color: "red", margin: "0px 0px 0px 10px" }}>
-                  delete
-                </Icon>
-              </IconButton>
-            </div>
+            <IconButton
+              size="small"
+              onClick={() => handleOpenDialogDelete(rowData)}
+            >
+              <Icon style={{ color: "red" }}>delete</Icon>
+            </IconButton>
 
-            <div>
-              <IconButton
-                size="small"
-                onClick={() => handleViewDetails(rowData)}
-              >
-                <Icon color="inherit" style={{ fontSize: "20px" }}>
-                  visibility
-                </Icon>
-              </IconButton>
-            </div>
+            <IconButton size="small" onClick={() => handleViewDetails(rowData)}>
+              <Icon color="inherit">visibility</Icon>
+            </IconButton>
           </div>
         );
       },

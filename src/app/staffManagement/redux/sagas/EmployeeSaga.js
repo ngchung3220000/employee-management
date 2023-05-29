@@ -96,6 +96,7 @@ export function* fetchGetAllEmployee(action) {
 function* fetchAddEmployee(action) {
   try {
     const result = yield call(addEmployee, action.payload);
+    console.log(result);
     if (result?.data?.code === SUCCESS) {
       yield put(addEmployeeSucceeded(action.payload));
       toast.success(result?.data?.message);
