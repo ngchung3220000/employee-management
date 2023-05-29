@@ -76,15 +76,13 @@ export default function EmployeeDialogSubmit(props) {
   const [listCertificate, setListCertificate] = useState([]);
   const [listFamilyRelation, setListFamilyRelation] = useState([]);
 
-  console.log(FORMAT_DATE_SUBMIT(employeeReducer?.employeeInfo?.dateOfBirth));
-
   useEffect(() => {
     if (employeeReducer.employeeInfo.employeeId) {
       setEmployeeInfo(employeeReducer.employeeInfo);
       setListCertificate(employeeReducer.certificates);
       setListFamilyRelation(employeeReducer.familyRelations);
     }
-  }, [employeeReducer.employeeInfo.employeeId]);
+  }, [employeeReducer?.employeeInfo?.employeeId]);
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
