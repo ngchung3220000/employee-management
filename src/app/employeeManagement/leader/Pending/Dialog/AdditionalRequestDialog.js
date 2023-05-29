@@ -10,8 +10,8 @@ import {
   IconButton,
   TextField,
 } from "@material-ui/core";
-import { ADDITIONAL_REQUESTED_STATUS } from "app/staffManagement/constants/constants";
-import { leaderActionRequest } from "app/staffManagement/redux/actions/EmployeeAction";
+import { ADDITIONAL_REQUESTED_STATUS } from "app/employeeManagement/constants/constants";
+import { leaderActionRequest } from "app/employeeManagement/redux/actions/EmployeeAction";
 
 export default function AdditionalRequestDialog(props) {
   const {

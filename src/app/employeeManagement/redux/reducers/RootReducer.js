@@ -6,7 +6,7 @@ import ScrumBoardReducer from "../../../redux/reducers/ScrumBoardReducer";
 import NotificationReducer from "../../../redux/reducers/NotificationReducer";
 import EcommerceReducer from "../../../redux/reducers/EcommerceReducer";
 
-import EmployeeReducer from "app/staffManagement/redux/reducers/EmployeeReducer";
+import EmployeeReducer from "app/employeeManagement/redux/reducers/EmployeeReducer";
 
 const RootReducer = combineReducers({
   login: LoginReducer,

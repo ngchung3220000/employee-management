@@ -67,7 +67,6 @@
       }
     }
   },
-
   "general": {
     "roles": "Vai Trò",
     "noti": "Thông báo",
@@ -720,7 +719,6 @@
     "WebinarStart": "Bắt đầu cuộc hội thảo?",
     "start": "Bắt đầu"
   },
-
   "Verify": {
     "something_went_wrong": "Oh no, something went wrong...",
     "verify_successful_title": "Registered successfully!",
@@ -734,7 +732,6 @@
     "back_to_dashboard": "Back to homepage",
     "time_expired": "Verification time expired. Please register again."
   },
-
   "FileUpload": {
     "drop_file_here": "Thả file của bạn vào đây",
     "selected": "đã chọn",
@@ -744,7 +741,6 @@
     "note_size": "File không được lớn hơn 2mb!",
     "note_format": "File không đúng định dạng!"
   },
-
   "ZoomMeeting": {
     "meetingNumber": "Số Phòng"
   },
@@ -788,7 +784,8 @@
     "profile_is_logged": "Quản lý Profile đang đăng nhập",
     "user": "Quản lý người dùng",
     "menu": "Quản lý Menu",
-    "employee": "Quản lý Nhân viên",
+    "addNewEmployee": "Tạo mới nhân viên",
+    "employeeManagement": "Quản lý Nhân viên",
     "pending": "Chờ duyệt",
     "approved": "Đã duyệt",
     "isMainDepartment": "Chọn phòng ban chính",

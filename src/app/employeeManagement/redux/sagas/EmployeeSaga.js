@@ -22,10 +22,10 @@ import {
   getEmployeeById,
   getFormEmployee,
   getTotalEmployeeCount,
-} from "app/staffManagement/api/EmployeeServices";
+} from "app/employeeManagement/api/EmployeeServices";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { SUCCESS } from "app/staffManagement/constants/constants";
+import { SUCCESS } from "app/employeeManagement/constants/constants";
 import {
   LEADER_ACTION_REQUESTED,
   ADD_EMPLOYEE_REQUESTED,

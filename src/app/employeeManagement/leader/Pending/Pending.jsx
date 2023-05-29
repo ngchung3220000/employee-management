@@ -6,16 +6,16 @@ import { Grid, Icon, IconButton } from "@material-ui/core";
 import {
   STATUSES,
   STATUS_OF_PENDING,
-} from "app/staffManagement/constants/constants";
+} from "app/employeeManagement/constants/constants";
 import {
   getAllEmployeeRequested,
   getTotalEmployeeCountRequested,
   getEmployeeById,
   getFormEmployeeRequested,
-} from "app/staffManagement/redux/actions/EmployeeAction";
+} from "app/employeeManagement/redux/actions/EmployeeAction";
 import moment from "moment";
-import { GENDER } from "app/staffManagement/staff/constains";
-import Pagination from "app/staffManagement/components/Pagination/Pagination";
+import { GENDER } from "app/employeeManagement/employee/constains";
+import Pagination from "app/employeeManagement/components/Pagination/Pagination";
 import "react-toastify/dist/ReactToastify.css";
 import PendingDialog from "./PendingDialog";
 
