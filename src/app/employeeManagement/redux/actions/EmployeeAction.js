@@ -15,6 +15,8 @@ import {
   GET_ALL_EMPLOYEE_SUCCEEDED,
   GET_FORM_EMPLOYEE,
   GET_FORM_EMPLOYEE_SUCCEEDED,
+  UPDATE_FORM_EMPLOYEE_REQUEST,
+  UPDATE_FORM_EMPLOYEE_SUCCEEDED,
   GET_TOTAL_EMPLOYEE,
   GET_TOTAL_EMPLOYEE_SUCCEEDED,
   RESET_EMPLOYEE,
@@ -165,6 +167,21 @@ export const getFormEmployeeRequested = (payload) => {
 export const getFormEmployeeSucceeded = (payload) => {
   return {
     type: GET_FORM_EMPLOYEE_SUCCEEDED,
+    payload: payload,
+  };
+};
+
+//UPDATE FORM EMPLOYEE
+export const updateFormEmployeeRequested = (payload) => {
+  return {
+    type: UPDATE_FORM_EMPLOYEE_REQUEST,
+    payload: payload,
+  };
+};
+
+export const updateFormEmployeeSucceeded = (payload) => {
+  return {
+    type: UPDATE_FORM_EMPLOYEE_SUCCEEDED,
     payload: payload,
   };
 };

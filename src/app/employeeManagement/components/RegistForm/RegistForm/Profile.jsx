@@ -12,7 +12,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import PhoneIcon from '@material-ui/icons/Phone';
 import RoomIcon from '@material-ui/icons/Room';
 import DateRangeIcon from '@material-ui/icons/DateRange';
-import "./Profile.css"
+import "./Profile.css";
 
 const MyTitle = styled(Typography)({
     color: 'inherit',
@@ -21,33 +21,44 @@ const MyTitle = styled(Typography)({
 })
 
 function Profile(props) {
-    const { cvData, setCvData, employeeInfo } = props;
+    const { formEmployee, setFormEmployee } = props.props;
+    // console.log(formEmployee?.cv?.workExperiences);
+    // console.log("regist", formEmployee);
+    // console.log(formEmployee?.cv);
+    // useEffect(() => {
+    //     // console.log(formEmployee?.cv);
+    //     setFormEmployee(formEmployee?.cv);
+    // }, [formEmployee])
 
-    useEffect(() => {
 
-    }, [])
 
     const handleIncrementWorkExperiences = () => {
-        let newArray = [...(cvData?.workExperiances || []), {
+        let newArray = [...formEmployee?.cv?.workExperiences, {
             company: null,
             position: null,
             details: null,
             startDate: null,
             endDate: null
         }]
-        setCvData({
-            ...cvData,
-            workExperiances: newArray
+        setFormEmployee({
+            ...formEmployee,
+            cv: {
+                ...formEmployee.cv,
+                workExperiences: newArray
+            }
         })
     }
 
     const handleDecrementWorkExperiences = (index) => {
         // debugger
-        cvData.workExperiances.splice(index, 1);
-        // console.log(newArray, cvData.workExperiances);
-        setCvData({
-            ...cvData,
-            workExperiances: cvData.workExperiances
+        formEmployee.cv.workExperiences.splice(index, 1);
+        // console.log(newArray, formEmployee?.cv.workExperiences);
+        setFormEmployee({
+            ...formEmployee,
+            cv: {
+                ...formEmployee.cv,
+                workExperiences: formEmployee?.cv.workExperiences
+            }
         })
     }
 
@@ -55,17 +66,23 @@ function Profile(props) {
         // debugger
         // console.log(index);
         if (typeof (index) === 'number') {
-            let newArray = cvData.workExperiances;
+            let newArray = formEmployee?.cv.workExperiences;
             newArray[index][e.target.name] = e.target.value;
             console.log(newArray[index][e.target.name]);
-            setCvData({
-                ...cvData,
-                workExperiances: newArray
+            setFormEmployee({
+                ...formEmployee,
+                cv: {
+                    ...formEmployee.cv,
+                    workExperiences: newArray
+                }
             })
         } else {
-            setCvData({
-                ...cvData,
-                [e.target.name]: e.target.value
+            setFormEmployee({
+                ...formEmployee,
+                cv: {
+                    ...formEmployee.cv,
+                    [e.target.name]: e.target.value
+                }
             })
         }
     }
@@ -75,7 +92,7 @@ function Profile(props) {
             <Grid item container xs={4} direction='column' style={{ backgroundColor: '#2b324c', color: '#fff' }} spacing={3}>
                 <Grid item container justifyContent='center'>
                     <Avatar
-                        src={employeeInfo.photoUrl}
+                        src={formEmployee?.resume?.photoUrl || ""}
                         style={{
                             width: "200px",
                             height: "200px",
@@ -90,23 +107,23 @@ function Profile(props) {
                     <Grid container spacing={2}>
                         <Grid item container justifyContent='flex-end'>
                             <Grid item xs={2}> <PersonIcon /> </Grid>
-                            <Grid item xs={9}>{employeeInfo.fullName}</Grid>
+                            <Grid item xs={9}>{formEmployee?.resume?.fullName}</Grid>
                         </Grid>
                         <Grid item container justifyContent='flex-end'>
                             <Grid item xs={2}> <DateRangeIcon /> </Grid>
-                            <Grid item xs={9}>{employeeInfo.dateOfBirth}</Grid>
+                            <Grid item xs={9}>{formEmployee?.resume?.dateOfBirth}</Grid>
                         </Grid>
                         <Grid item container justifyContent='flex-end'>
                             <Grid item xs={2}> <MailIcon /> </Grid>
-                            <Grid item xs={9}>{employeeInfo.email}</Grid>
+                            <Grid item xs={9}>{formEmployee?.resume?.email}</Grid>
                         </Grid>
                         <Grid item container justifyContent='flex-end'>
                             <Grid item xs={2}> <PhoneIcon /> </Grid>
-                            <Grid item xs={9}>{employeeInfo.phone}</Grid>
+                            <Grid item xs={9}>{formEmployee?.resume?.phone}</Grid>
                         </Grid>
                         <Grid item container justifyContent='flex-end'>
                             <Grid item xs={2}> <RoomIcon /> </Grid>
-                            <Grid item xs={9}>{employeeInfo.address}</Grid>
+                            <Grid item xs={9}>{formEmployee?.resume?.address}</Grid>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -118,7 +135,7 @@ function Profile(props) {
                         className='darkTextField'
                         fullWidth
                         multiline
-                        value={cvData?.skill || ''}
+                        value={formEmployee?.cv?.skill || ''}
                         name='skill'
                         onChange={(e) => handleChangeInput(e)}
                     />
@@ -131,7 +148,7 @@ function Profile(props) {
                         className='darkTextField'
                         fullWidth
                         multiline
-                        value={cvData?.hobby || ''}
+                        value={formEmployee?.cv?.hobby || ''}
                         name='hobby'
                         onChange={(e) => handleChangeInput(e)}
                     />
@@ -143,7 +160,7 @@ function Profile(props) {
                     <TextField
                         fullWidth
                         multiline
-                        value={cvData?.careerGoal || ''}
+                        value={formEmployee?.cv?.careerGoal || ''}
                         name='careerGoal'
                         onChange={(e) => handleChangeInput(e)}
                     />
@@ -151,7 +168,7 @@ function Profile(props) {
                 <Grid item container direction='column' >
                     <MyTitle>KINH NGHIỆM LÀM VIỆC</MyTitle>
                     {
-                        (cvData?.workExperiances || []).map((element, index) => {
+                        formEmployee?.cv?.workExperiences.map((element, index) => {
                             return <Grid item container style={{ border: '1px dashed #ccc', padding: '10px', margin: '10px 0', position: 'relative' }}>
                                 <IconButton
                                     style={{
@@ -193,6 +210,7 @@ function Profile(props) {
                                     <Grid item>
                                         <label>Chi tiết: </label>
                                         <TextField fullWidth multiline size='small'
+                                            type='text'
                                             value={element?.details || ''}
                                             name="details"
                                             onChange={(e) => handleChangeInput(e, index)}

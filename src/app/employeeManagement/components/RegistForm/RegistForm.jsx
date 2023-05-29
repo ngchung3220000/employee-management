@@ -1,21 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import {
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogActions,
-    Button
-} from '@material-ui/core'
 
 import Profile from './RegistForm/Profile';
 import Resume from './RegistForm/Resume';
 import Diploma from './RegistForm/Diploma';
+
+import { useSelector } from "react-redux"
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -30,7 +25,7 @@ function TabPanel(props) {
         >
             {value === index && (
                 <Box p={3}>
-                    <Typography>{children}</Typography>
+                    <Typography component="div">{children}</Typography>
                 </Box>
             )}
         </div>
@@ -62,13 +57,20 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function RegistForm(employeeInfo) {
+function RegistForm(props) {
+    // console.log("regist 1", formEmployee);
+    // const {formEmployee, setFormEmployee} = props;
     const classes = useStyles();
     const [value, setValue] = useState(0);
 
     const [resume, setResume] = useState({})
     const [cv, setCv] = useState({})
 
+    // const formEmployee = useSelector(state => state.employee.formEmployee)
+
+    // useEffect(() => {
+    //     setCv(formEmployee.cv)
+    // }, [formEmployee?.employeeId])
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -91,16 +93,12 @@ function RegistForm(employeeInfo) {
             <div style={{ width: "100%" }}>
                 <TabPanel value={value} index={0}>
                     <Profile
-                        cvData={cv}
-                        setCvData={setCv}
-                        employeeInfo={employeeInfo}
+                        props={props}
                     />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                     <Resume
-                        resumeData={resume}
-                        setResumeData={setResume}
-                        employeeInfo={employeeInfo}
+                        props={props}
                     />
                 </TabPanel>
                 <TabPanel value={value} index={2}>

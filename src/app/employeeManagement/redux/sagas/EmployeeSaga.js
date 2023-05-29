@@ -12,6 +12,7 @@ import {
   resetEmployeeActionSucceeded,
   getEmployeeByIdSucceeded,
   getFormEmployeeSucceeded,
+  updateFormEmployeeSucceeded
 } from "../actions/EmployeeAction";
 import {
   addEmployee,
@@ -22,6 +23,7 @@ import {
   getEmployeeById,
   getFormEmployee,
   getTotalEmployeeCount,
+  updateFormEmployee,
 } from "app/employeeManagement/api/EmployeeServices";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -36,6 +38,7 @@ import {
   GET_TOTAL_EMPLOYEE,
   RESET_EMPLOYEE,
   SET_EMPLOYEE,
+  UPDATE_FORM_EMPLOYEE_REQUEST,
 } from "../constants/employeeConstant";
 
 toast.configure({
@@ -150,6 +153,19 @@ export function* fetchGetFormEmployee(action) {
   }
 }
 
+export function* fetchUpdateFormEmployee(action) {
+  try {
+    const result = yield call(updateFormEmployee, action.payload);
+    if (result?.data?.code === SUCCESS) {
+      yield put(updateFormEmployeeSucceeded(result?.data?.data));
+    } else {
+      toast.error(result?.data?.message);
+    }
+  } catch (error) {
+    toast.error("Lỗi máy chủ rồi!!!");
+  }
+}
+
 export function* fetchLeaderAction(action) {
   try {
     const result = yield call(
@@ -176,5 +192,6 @@ export default function* rootEmployeeSaga() {
   yield takeEvery(EDIT_EMPLOYEE_REQUESTED, fetchEditEmployee);
   yield takeEvery(DELETE_EMPLOYEE_REQUESTED, fetchDeleteEmployee);
   yield takeEvery(GET_FORM_EMPLOYEE, fetchGetFormEmployee);
+  yield takeEvery(UPDATE_FORM_EMPLOYEE_REQUEST, fetchUpdateFormEmployee);
   yield takeEvery(LEADER_ACTION_REQUESTED, fetchLeaderAction);
 }
