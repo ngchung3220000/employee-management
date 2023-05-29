@@ -13,7 +13,8 @@ import {
     Avatar,
 } from '@material-ui/core'
 import MaterialTable from 'material-table'
-function Resume() {
+function Resume(props) {
+    const { formEmployee, setFormEmployee } = props.props;
 
     return (
         <Grid container spacing={2}>
@@ -31,7 +32,7 @@ function Resume() {
             <Grid item container spacing={14} padding={4} alignItems={"center"}>
                 <Grid item xs={5} textAlign="center">
                     <Avatar
-                        src={"https://sm.ign.com/ign_ap/cover/a/avatar-gen/avatar-generations_hugw.jpg"}
+                        src={formEmployee?.resume.photoUrl}
                         style={{
                             width: "200px",
                             height: "200px",
@@ -60,6 +61,7 @@ function Resume() {
                                     <InputAdornment position="start">1. Họ và tên:</InputAdornment>
                                 }
                                 name="fullName"
+                                value={formEmployee?.resume.fullName}
                                 onChange={(event) => {
                                 }}
                             />
@@ -73,6 +75,7 @@ function Resume() {
                                 select
                                 variant="standard"
                                 name="gender"
+                                values={formEmployee?.resume.abc}
                                 onChange={(event) => {
                                 }}
                             >
@@ -90,7 +93,8 @@ function Resume() {
                             id="standard-adornment-amount"
                             fullWidth
                             startAdornment={<InputAdornment position="start">2. Sinh ngày:</InputAdornment>}
-                            name="birthday"
+                            name="dateOfBirth"
+                            values={formEmployee?.resume.dateOfBirth}
                             onChange={(event) => {
                             }}
                         />
@@ -101,6 +105,7 @@ function Resume() {
                             fullWidth
                             startAdornment={<InputAdornment position="start">3. Chỗ ở hiện nay:</InputAdornment>}
                             name="address"
+                            values={formEmployee?.resume.address}
                             onChange={(event) => {
                             }}
                         />
@@ -112,6 +117,7 @@ function Resume() {
                                 fullWidth
                                 startAdornment={<InputAdornment position="start">4. Điện thoại:</InputAdornment>}
                                 name="phone"
+                                values={formEmployee?.resume.phone}
                                 onChange={(event) => {
                                 }}
                             />
@@ -122,6 +128,7 @@ function Resume() {
                                 fullWidth
                                 startAdornment={<InputAdornment position="start">Email:</InputAdornment>}
                                 name="email"
+                                values={formEmployee?.resume.email}
                                 onChange={(event) => {
                                 }}
                             />
@@ -133,7 +140,8 @@ function Resume() {
                                 id="standard-adornment-amount"
                                 fullWidth
                                 startAdornment={<InputAdornment position="start">5. Dân tộc:</InputAdornment>}
-                                name="ethnic"
+                                name="ethnicity"
+                                values={formEmployee?.resume.ethnicity}
                                 onChange={(event) => {
                                 }}
                             />
@@ -144,6 +152,7 @@ function Resume() {
                                 fullWidth
                                 startAdornment={<InputAdornment position="start">Tôn giáo:</InputAdornment>}
                                 name="religion"
+                                values={formEmployee?.resume.religion}
                                 onChange={(event) => {
                                 }}
                             />
@@ -155,7 +164,8 @@ function Resume() {
                                 id="standard-adornment-amount"
                                 fullWidth
                                 startAdornment={<InputAdornment position="start">6. Số CCCD:</InputAdornment>}
-                                name="identityCode"
+                                name="citizenId"
+                                values={formEmployee?.resume.citizenId}
                                 onChange={(event) => {
                                 }}
                             />
@@ -166,7 +176,8 @@ function Resume() {
                                 id="standard-adornment-amount"
                                 fullWidth
                                 startAdornment={<InputAdornment position="start">Cấp ngày:</InputAdornment>}
-                                name="dateIssue"
+                                name="citizenIdIssuanceDate"
+                                values={formEmployee?.resume.citizenIdIssuanceDate}
                                 onChange={(event) => {
                                 }}
                             />
@@ -179,8 +190,9 @@ function Resume() {
                                 // readOnly: status,
                             }}
                             fullWidth
-                            select
                             variant="standard"
+                            name='citizenIdIssuingAuthority'
+                            value={formEmployee?.resume.citizenIdIssuingAuthority}
                             onChange={(event) => {
                             }}
                         >

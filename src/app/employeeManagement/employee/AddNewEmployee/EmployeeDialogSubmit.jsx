@@ -27,6 +27,7 @@ import { FORMAT_DATE_SUBMIT } from "../constains";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EmployeeRegistDialog from "./EmployeeRegistDialog";
+import { getFormEmployeeRequested } from "app/employeeManagement/redux/actions/EmployeeAction";
 
 toast.configure({
   autoClose: 2000,
@@ -71,6 +72,7 @@ export default function EmployeeDialogSubmit(props) {
   const { open, close, setReloadData } = props;
   const dispatch = useDispatch();
   const employeeReducer = useSelector((state) => state.employee.employee);
+  // console.log(employeeReducer);
   const [tab, setTab] = useState(0);
   const [hidden, setHidden] = useState(false);
   const [employee, setEmployeeInfo] = useState({});
@@ -80,7 +82,7 @@ export default function EmployeeDialogSubmit(props) {
   const [openRegistDialog, setOpenRegistDialog] = useState(false);
 
   useEffect(() => {
-    if (employeeReducer.employeeInfo.employeeId) {
+    if (employeeReducer.employeeInfo?.employeeId) {
       setEmployeeInfo(employeeReducer.employeeInfo);
       setListCertificate(employeeReducer.certificates);
       setListFamilyRelation(employeeReducer.familyRelations);
@@ -123,6 +125,11 @@ export default function EmployeeDialogSubmit(props) {
 
   const handleChangeTab = (event, newValue) => {
     setTab(newValue);
+  };
+
+  const handleOpenRegistForm = () => {
+    dispatch(getFormEmployeeRequested(employeeReducer.employeeInfo.employeeId));
+    setOpenRegistDialog(true);
   };
 
   return (
@@ -173,7 +180,11 @@ export default function EmployeeDialogSubmit(props) {
             />
           </TabPanel>
 
-          {openRegistDialog && <EmployeeRegistDialog />}
+          {openRegistDialog && (
+            <EmployeeRegistDialog
+              closeRegistDialog={() => setOpenRegistDialog(false)}
+            />
+          )}
         </DialogContent>
 
         <DialogActions style={{ justifyContent: "center" }}>
@@ -183,7 +194,7 @@ export default function EmployeeDialogSubmit(props) {
               variant="contained"
               className="mr-12"
               color="secondary"
-              onClick={() => setOpenRegistDialog(true)}
+              onClick={() => handleOpenRegistForm()}
             >
               Đăng ký
             </Button>

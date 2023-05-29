@@ -43,6 +43,11 @@ export const getFormEmployee = (id) => {
   return axios.get(API_PATH + `/employees/${id}/form`);
 };
 
+export const updateFormEmployee = (data) => {
+  return axios.put(API_PATH + `/employees/${data.id}/form`, data);
+};
+
 export const leaderAction = (id, data) => {
   return axios.put(API_PATH + `/employees/${id}/status`, data);
 };
+

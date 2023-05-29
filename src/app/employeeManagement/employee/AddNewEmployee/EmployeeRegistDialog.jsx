@@ -7,24 +7,30 @@ import {
     Button
 } from '@material-ui/core'
 import RegistForm from 'app/employeeManagement/components/RegistForm/RegistForm';
-import { getFormEmployeeRequested } from 'app/employeeManagement/redux/actions/EmployeeAction';
 
 import { useSelector, useDispatch } from 'react-redux'
 
-export default function EmployeeRegistDialog() {
+export default function EmployeeRegistDialog(props) {
 
     const dispatch = useDispatch();
-    const employeeInfo = useSelector(state => state.employee.employee);
-    // console.log(employeeInfo);
+    const { closeRegistDialog } = props;
+    const [formEmployee, setFormEmployee] = useState({})
+
+    const formData = useSelector(state => state.employee.formEmployee);
     useEffect(() => {
-        dispatch()
-    }, [])
+        setFormEmployee(formData);
+    }, [formData])
+    //dispatch(addformemployee)
+
+    const handleUpdateFormEmployee = () => {
+
+    }
 
 
     return (
-        <Dialog open={true} onClose={() => { }}
+        <Dialog open={true} onClose={() => closeRegistDialog()}
             aria-labelledby="form-dialog-title"
-            maxWidth='xl    '
+            maxWidth='lg'
             fullWidth
         >
             {/* <DialogTitle id="form-dialog-title">Subscribe</DialogTitle> */}
@@ -33,17 +39,18 @@ export default function EmployeeRegistDialog() {
 
             >
                 <RegistForm
-                    employeeInfo={employeeInfo}
+                    formEmployee={formEmployee}
+                    setFormEmployee={setFormEmployee}
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => { }} color="secondary" variant='contained'>
+                <Button onClick={() => handleUpdateFormEmployee()} color="secondary" variant='contained'>
                     Lưu
                 </Button>
                 <Button onClick={() => { }} color="primary" variant='contained'>
                     Gửi lãnh đạo
                 </Button>
-                <Button onClick={() => { }} color="error" variant='contained'>
+                <Button onClick={() => closeRegistDialog()} color="error" variant='contained'>
                     Hủy
                 </Button>
             </DialogActions>

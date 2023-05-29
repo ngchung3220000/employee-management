@@ -13,6 +13,7 @@ import {
   GET_ALL_EMPLOYEE_SUCCEEDED,
   GET_FORM_EMPLOYEE,
   GET_FORM_EMPLOYEE_SUCCEEDED,
+  UPDATE_FORM_EMPLOYEE_SUCCEEDED,
   GET_TOTAL_EMPLOYEE,
   GET_TOTAL_EMPLOYEE_SUCCEEDED,
   RESET_EMPLOYEE,
@@ -87,6 +88,12 @@ const EmployeeReducer = (state = initialState, action) => {
         ...state,
         formEmployee: action.payload,
       };
+
+    case UPDATE_FORM_EMPLOYEE_SUCCEEDED:
+      return {
+        ...state,
+        formEmployee: action.payload,
+      }
 
     // CASE FAIL:
     case GET_ALL_EMPLOYEE_FAILED:

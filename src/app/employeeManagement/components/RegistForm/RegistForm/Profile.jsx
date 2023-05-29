@@ -22,14 +22,18 @@ const MyTitle = styled(Typography)({
 });
 
 function Profile(props) {
-  const { cvData, setCvData, employeeInfo } = props;
-
-  console.log(employeeInfo);
-  useEffect(() => {}, []);
+  const { formEmployee, setFormEmployee } = props.props;
+  // console.log(formEmployee?.cv?.workExperiences);
+  // console.log("regist", formEmployee);
+  // console.log(formEmployee?.cv);
+  // useEffect(() => {
+  //     // console.log(formEmployee?.cv);
+  //     setFormEmployee(formEmployee?.cv);
+  // }, [formEmployee])
 
   const handleIncrementWorkExperiences = () => {
     let newArray = [
-      ...(cvData?.workExperiances || []),
+      ...formEmployee?.cv?.workExperiences,
       {
         company: null,
         position: null,
@@ -38,19 +42,25 @@ function Profile(props) {
         endDate: null,
       },
     ];
-    setCvData({
-      ...cvData,
-      workExperiances: newArray,
+    setFormEmployee({
+      ...formEmployee,
+      cv: {
+        ...formEmployee.cv,
+        workExperiences: newArray,
+      },
     });
   };
 
   const handleDecrementWorkExperiences = (index) => {
     // debugger
-    cvData.workExperiances.splice(index, 1);
-    // console.log(newArray, cvData.workExperiances);
-    setCvData({
-      ...cvData,
-      workExperiances: cvData.workExperiances,
+    formEmployee.cv.workExperiences.splice(index, 1);
+    // console.log(newArray, formEmployee?.cv.workExperiences);
+    setFormEmployee({
+      ...formEmployee,
+      cv: {
+        ...formEmployee.cv,
+        workExperiences: formEmployee?.cv.workExperiences,
+      },
     });
   };
 
@@ -58,17 +68,23 @@ function Profile(props) {
     // debugger
     // console.log(index);
     if (typeof index === "number") {
-      let newArray = cvData.workExperiances;
+      let newArray = formEmployee?.cv.workExperiences;
       newArray[index][e.target.name] = e.target.value;
       console.log(newArray[index][e.target.name]);
-      setCvData({
-        ...cvData,
-        workExperiances: newArray,
+      setFormEmployee({
+        ...formEmployee,
+        cv: {
+          ...formEmployee.cv,
+          workExperiences: newArray,
+        },
       });
     } else {
-      setCvData({
-        ...cvData,
-        [e.target.name]: e.target.value,
+      setFormEmployee({
+        ...formEmployee,
+        cv: {
+          ...formEmployee.cv,
+          [e.target.name]: e.target.value,
+        },
       });
     }
   };
@@ -85,7 +101,7 @@ function Profile(props) {
       >
         <Grid item container justifyContent="center">
           <Avatar
-            src={employeeInfo?.resume?.photoUrl}
+            src={formEmployee?.resume?.photoUrl || ""}
             style={{
               width: "200px",
               height: "200px",
@@ -104,7 +120,7 @@ function Profile(props) {
                 <PersonIcon />{" "}
               </Grid>
               <Grid item xs={9}>
-                {employeeInfo?.resume?.fullName}
+                {formEmployee?.resume?.fullName}
               </Grid>
             </Grid>
             <Grid item container justifyContent="flex-end">
@@ -113,7 +129,7 @@ function Profile(props) {
                 <DateRangeIcon />{" "}
               </Grid>
               <Grid item xs={9}>
-                {employeeInfo?.resume?.dateOfBirth}
+                {formEmployee?.resume?.dateOfBirth}
               </Grid>
             </Grid>
             <Grid item container justifyContent="flex-end">
@@ -122,7 +138,7 @@ function Profile(props) {
                 <MailIcon />{" "}
               </Grid>
               <Grid item xs={9}>
-                {employeeInfo?.resume?.email}
+                {formEmployee?.resume?.email}
               </Grid>
             </Grid>
             <Grid item container justifyContent="flex-end">
@@ -131,7 +147,7 @@ function Profile(props) {
                 <PhoneIcon />{" "}
               </Grid>
               <Grid item xs={9}>
-                {employeeInfo?.resume?.phone}
+                {formEmployee?.resume?.phone}
               </Grid>
             </Grid>
             <Grid item container justifyContent="flex-end">
@@ -140,7 +156,7 @@ function Profile(props) {
                 <RoomIcon />{" "}
               </Grid>
               <Grid item xs={9}>
-                {employeeInfo?.resume?.address}
+                {formEmployee?.resume?.address}
               </Grid>
             </Grid>
           </Grid>
@@ -153,7 +169,7 @@ function Profile(props) {
             className="darkTextField"
             fullWidth
             multiline
-            value={cvData?.skill || ""}
+            value={formEmployee?.cv?.skill || ""}
             name="skill"
             onChange={(e) => handleChangeInput(e)}
           />
@@ -166,7 +182,7 @@ function Profile(props) {
             className="darkTextField"
             fullWidth
             multiline
-            value={cvData?.hobby || ""}
+            value={formEmployee?.cv?.hobby || ""}
             name="hobby"
             onChange={(e) => handleChangeInput(e)}
           />
@@ -178,14 +194,14 @@ function Profile(props) {
           <TextField
             fullWidth
             multiline
-            value={cvData?.careerGoal || ""}
+            value={formEmployee?.cv?.careerGoal || ""}
             name="careerGoal"
             onChange={(e) => handleChangeInput(e)}
           />
         </Grid>
         <Grid item container direction="column">
           <MyTitle>KINH NGHIỆM LÀM VIỆC</MyTitle>
-          {(cvData?.workExperiances || []).map((element, index) => {
+          {formEmployee?.cv?.workExperiences.map((element, index) => {
             return (
               <Grid
                 item
@@ -246,6 +262,7 @@ function Profile(props) {
                       fullWidth
                       multiline
                       size="small"
+                      type="text"
                       value={element?.details || ""}
                       name="details"
                       onChange={(e) => handleChangeInput(e, index)}
@@ -263,5 +280,4 @@ function Profile(props) {
     </Grid>
   );
 }
-
 export default Profile;
