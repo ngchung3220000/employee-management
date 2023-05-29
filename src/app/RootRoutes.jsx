@@ -15,6 +15,7 @@ import ColorRoutes from "./views/Color/ColorRoutes";
 import CategoryRoutes from "./views/Category/CategoryRoutes";
 
 import EmployeeRoutes from "./staffManagement/staff/Employee/EmployeeRoutes";
+import PendingRoutes from "./staffManagement/leader/Pending/PendingRoutes";
 
 const redirectRoute = [
   {
@@ -39,6 +40,7 @@ const routes = [
   ...pageLayoutRoutes,
   ...MenuRoutes,
   ...EmployeeRoutes,
+  ...PendingRoutes,
   ...UserRoutes,
   // ...ShiftWorkRouters,
   // ...ColorRoutes,

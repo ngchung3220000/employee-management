@@ -12,13 +12,6 @@ import { GENDER, TEAMS } from "../../constains";
 
 export default function EmployeeForm(props) {
   const { employeeInfo, setEmployeeInfo } = props;
-  const employeeReducer = useSelector((state) => state.employee.employee);
-
-  useEffect(() => {
-    if (employeeReducer?.employeeInfo?.employeeId) {
-      setEmployeeInfo(employeeReducer?.employeeInfo);
-    }
-  }, [employeeReducer?.employeeInfo?.employeeId]);
 
   const handleChangeImg = (e) => {
     setEmployeeInfo({

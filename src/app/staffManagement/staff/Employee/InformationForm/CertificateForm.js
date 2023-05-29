@@ -20,16 +20,9 @@ import DialogDelete from "../../dialog/DialogDelete";
 
 export default function CertificateForm(props) {
   const { listCertificate, setListCertificate } = props;
-  const employeeReducer = useSelector((state) => state.employee.employee);
   const [certificate, setCertificate] = useState({});
   const [idCertificate, setIdCertificate] = useState();
   const [dialogDelete, setDialogDelete] = useState(false);
-
-  useEffect(() => {
-    if (employeeReducer?.employeeInfo?.employeeId) {
-      setListCertificate(employeeReducer?.certificates);
-    }
-  }, [employeeReducer?.employeeInfo?.employeeId]);
 
   function handleChangeValue(e) {
     setCertificate({ ...certificate, [e.target.name]: e.target.value });

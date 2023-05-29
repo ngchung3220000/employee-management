@@ -23,16 +23,9 @@ import { GENDER } from "../../constains";
 
 export default function FamilyRelationshipForm(props) {
   const { listFamilyRelation, setListFamilyRelation } = props;
-  const employeeReducer = useSelector((state) => state.employee.employee);
   const [familyRelation, setFamilyRelation] = useState({});
   const [idFamilyRelation, setIdFamilyRelation] = useState();
   const [dialogDelete, setDialogDelete] = useState(false);
-
-  useEffect(() => {
-    if (employeeReducer?.employeeInfo?.employeeId) {
-      setListFamilyRelation(employeeReducer?.familyRelations);
-    }
-  }, [employeeReducer?.employeeInfo?.employeeId]);
 
   const handleChangeValue = (e) => {
     setFamilyRelation({ ...familyRelation, [e.target.name]: e.target.value });

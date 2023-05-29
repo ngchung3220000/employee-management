@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   AppBar,
@@ -79,7 +79,15 @@ export default function EmployeeDialogSubmit(props) {
 
   const [openRegistDialog, setOpenRegistDialog] = useState(false)
 
-  console.log(FORMAT_DATE_SUBMIT(employeeReducer?.employeeInfo?.dateOfBirth));
+
+
+  useEffect(() => {
+    if (employeeReducer.employeeInfo.employeeId) {
+      setEmployeeInfo(employeeReducer.employeeInfo);
+      setListCertificate(employeeReducer.certificates);
+      setListFamilyRelation(employeeReducer.familyRelations);
+    }
+  }, [employeeReducer?.employeeInfo?.employeeId]);
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
@@ -112,7 +120,7 @@ export default function EmployeeDialogSubmit(props) {
       ? dispatch(editEmployeeRequested(employeeData))
       : dispatch(addEmployeeRequested(employeeData));
 
-    setHidden(!hidden);
+    setHidden(true);
   };
 
   const handleChangeTab = (event, newValue) => {
@@ -152,6 +160,18 @@ export default function EmployeeDialogSubmit(props) {
             <EmployeeForm
               employeeInfo={employee}
               setEmployeeInfo={setEmployeeInfo}
+            />
+          </TabPanel>
+          <TabPanel value={tab} index={1}>
+            <CertificateForm
+              listCertificate={listCertificate}
+              setListCertificate={setListCertificate}
+            />
+          </TabPanel>
+          <TabPanel value={tab} index={2}>
+            <FamilyRelationshipForm
+              listFamilyRelation={listFamilyRelation}
+              setListFamilyRelation={setListFamilyRelation}
             />
           </TabPanel>
           <TabPanel value={tab} index={1}>

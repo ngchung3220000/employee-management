@@ -8,24 +8,32 @@ import {
   editEmployeeSucceeded,
   getAllEmployeeFailed,
   getAllEmployeeSucceeded,
+  getTotalEmployeeCountSucceeded,
   resetEmployeeActionSucceeded,
-  setEmployeeActionSucceeded,
+  getEmployeeByIdSucceeded,
+  getFormEmployeeSucceeded,
 } from "../actions/EmployeeAction";
 import {
   addEmployee,
+  leaderAction,
   deleteEmployee,
   editEmployee,
-  getAllEmployee,
+  getAllEmployeeByStatus,
   getEmployeeById,
+  getFormEmployee,
+  getTotalEmployeeCount,
 } from "app/staffManagement/api/EmployeeServices";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { SUCCESS } from "app/staffManagement/constants/constants";
 import {
+  LEADER_ACTION_REQUESTED,
   ADD_EMPLOYEE_REQUESTED,
   DELETE_EMPLOYEE_REQUESTED,
   EDIT_EMPLOYEE_REQUESTED,
   GET_ALL_EMPLOYEE_REQUESTED,
+  GET_FORM_EMPLOYEE,
+  GET_TOTAL_EMPLOYEE,
   RESET_EMPLOYEE,
   SET_EMPLOYEE,
 } from "../constants/employeeConstant";
@@ -36,11 +44,24 @@ toast.configure({
   limit: 3,
 });
 
+export function* fetchGetTotalEmployee(action) {
+  try {
+    const result = yield call(getTotalEmployeeCount, action.payload);
+    if (result?.data?.code === SUCCESS) {
+      yield put(getTotalEmployeeCountSucceeded(result?.data?.data));
+    } else {
+      toast.error(result?.data?.message);
+    }
+  } catch (error) {
+    toast.error("Máy chủ lỗi!!!");
+  }
+}
+
 export function* fetchGetEmployeeById(action) {
   try {
     const result = yield call(getEmployeeById, action.payload);
     if (result?.data?.code === SUCCESS) {
-      yield put(setEmployeeActionSucceeded(result?.data?.data));
+      yield put(getEmployeeByIdSucceeded(result?.data?.data));
     } else {
       toast.error(result?.data?.message);
     }
@@ -56,7 +77,7 @@ export function* resetEmployee(action) {
 export function* fetchGetAllEmployee(action) {
   try {
     const result = yield call(
-      getAllEmployee,
+      getAllEmployeeByStatus,
       action.payload.status,
       action.payload.page,
       action.payload.rowPerPage
@@ -116,11 +137,44 @@ function* fetchDeleteEmployee(action) {
   }
 }
 
+export function* fetchGetFormEmployee(action) {
+  try {
+    const result = yield call(getFormEmployee, action.payload);
+    if (result?.data?.code === SUCCESS) {
+      yield put(getFormEmployeeSucceeded(result?.data?.data));
+    } else {
+      toast.error(result?.data?.message);
+    }
+  } catch (error) {
+    toast.error("Lỗi máy chủ rồi!!!");
+  }
+}
+
+export function* fetchLeaderAction(action) {
+  try {
+    const result = yield call(
+      leaderAction,
+      action.payload.id,
+      action.payload.data
+    );
+    if (result?.data?.code === SUCCESS) {
+      toast.success("Gửi yêu cầu thành công");
+    } else {
+      toast.error("Gửi yêu cầu thất bại");
+    }
+  } catch (error) {
+    toast.error("Máy chủ lỗi!!!");
+  }
+}
+
 export default function* rootEmployeeSaga() {
   yield takeEvery(SET_EMPLOYEE, fetchGetEmployeeById);
   yield takeEvery(RESET_EMPLOYEE, resetEmployee);
+  yield takeEvery(GET_TOTAL_EMPLOYEE, fetchGetTotalEmployee);
   yield takeEvery(GET_ALL_EMPLOYEE_REQUESTED, fetchGetAllEmployee);
   yield takeEvery(ADD_EMPLOYEE_REQUESTED, fetchAddEmployee);
   yield takeEvery(EDIT_EMPLOYEE_REQUESTED, fetchEditEmployee);
   yield takeEvery(DELETE_EMPLOYEE_REQUESTED, fetchDeleteEmployee);
+  yield takeEvery(GET_FORM_EMPLOYEE, fetchGetFormEmployee);
+  yield takeEvery(LEADER_ACTION_REQUESTED, fetchLeaderAction);
 }
