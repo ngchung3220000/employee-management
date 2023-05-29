@@ -8,6 +8,7 @@ import {
   IconButton,
   TablePagination,
 } from "@material-ui/core";
+import moment from "moment";
 import { Breadcrumb } from "egret";
 import { toast } from "react-toastify";
 import EmployeeDialogSubmit from "./EmployeeDialogSubmit";
@@ -15,22 +16,19 @@ import DialogDelete from "../dialog/DialogDelete";
 import {
   deleteEmployeeRequested,
   getAllEmployeeRequested,
+  resetEmployeeAction,
+  setEmployeeAction,
 } from "../../redux/actions/EmployeeAction";
-import "react-toastify/dist/ReactToastify.css";
-import moment from "moment";
-import {
-  getEmployeeById,
-  getTotalEmployeeCount,
-} from "app/staffManagement/api/EmployeeServices";
+import { getTotalEmployeeCount } from "app/staffManagement/api/EmployeeServices";
 import {
   DELETE_STATUS,
   EDIT_STATUSES,
-  GENDER,
   STATUSES,
   STATUS_OF_ADD_EMPLOYEE,
-  SUCCESS,
   VIEW_DETAILS_STATUSES,
 } from "app/staffManagement/constants/constants";
+import "react-toastify/dist/ReactToastify.css";
+import { GENDER } from "../constains";
 
 toast.configure({
   autoClose: 2000,
@@ -49,22 +47,6 @@ function Employee() {
   const [rowPerPage, setRowPerPage] = useState(10);
   const [reloadData, setReloadData] = useState(false);
   const [totalEmployeeCount, setTotalEmployeeCount] = useState();
-  const [employee, setEmployee] = useState({});
-
-  console.log(employee);
-
-  const fetchData = async (api, data, setState) => {
-    try {
-      const result = await api(data);
-      if (result?.data?.code === SUCCESS) {
-        setState(result?.data?.data);
-      } else {
-        toast.error(result?.data?.message);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   useEffect(() => {
     dispatch(
@@ -103,7 +85,7 @@ function Employee() {
     );
     if (condition) {
       // Get employee by id
-      fetchData(getEmployeeById, rowData?.employeeId, setEmployee);
+      dispatch(setEmployeeAction(rowData.employeeId));
       setDialogSubmit(true);
     } else {
       toast.warning(
@@ -113,8 +95,8 @@ function Employee() {
   };
 
   const handleClose = () => {
+    dispatch(resetEmployeeAction({}));
     setDialogSubmit(false);
-    setEmployee({});
     setReloadData(!reloadData);
   };
 
@@ -258,8 +240,7 @@ function Employee() {
 
           {dialogSubmit && (
             <EmployeeDialogSubmit
-              employee={employee}
-              setEmployee={setEmployee}
+              setReloadData={setReloadData}
               open={dialogSubmit}
               close={handleClose}
             />

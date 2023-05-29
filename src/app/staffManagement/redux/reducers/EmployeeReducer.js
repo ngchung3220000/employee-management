@@ -8,25 +8,31 @@ import {
   EDIT_EMPLOYEE_FAILED,
   EDIT_EMPLOYEE_REQUESTED,
   EDIT_EMPLOYEE_SUCCEEDED,
-  GET_EMPLOYEES_FAILED,
-  GET_EMPLOYEES_REQUESTED,
-  GET_EMPLOYEES_SUCCEEDED,
+  GET_ALL_EMPLOYEE_FAILED,
+  GET_ALL_EMPLOYEE_REQUESTED,
+  GET_ALL_EMPLOYEE_SUCCEEDED,
   RESET_EMPLOYEE,
   RESET_EMPLOYEE_SUCCEEDED,
   SET_EMPLOYEE,
   SET_EMPLOYEE_SUCCEEDED,
+  SET_LIST_CERTIFICATE,
+  SET_LIST_FAMILY_RELATIONSHIP,
 } from "../constants/employeeConstant";
 
 const initialState = {
   listEmployee: [],
-  employee: {},
+  employee: {
+    employeeInfo: {},
+    certificates: [],
+    familyRelations: [],
+  },
   loading: false,
   error: false,
 };
 
 const EmployeeReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_EMPLOYEES_REQUESTED:
+    case GET_ALL_EMPLOYEE_REQUESTED:
     case ADD_EMPLOYEE_REQUESTED:
     case EDIT_EMPLOYEE_REQUESTED:
     case DELETE_EMPLOYEE_REQUESTED:
@@ -39,7 +45,7 @@ const EmployeeReducer = (state = initialState, action) => {
     case RESET_EMPLOYEE_SUCCEEDED:
       return { ...state, employee: action.payload };
 
-    case GET_EMPLOYEES_SUCCEEDED:
+    case GET_ALL_EMPLOYEE_SUCCEEDED:
       return {
         ...state,
         listEmployee: action.payload,
@@ -49,10 +55,12 @@ const EmployeeReducer = (state = initialState, action) => {
 
     case ADD_EMPLOYEE_SUCCEEDED:
     case EDIT_EMPLOYEE_SUCCEEDED:
+      console.log("payload reducer", action);
       return {
         ...state,
         loading: false,
         error: false,
+        employee: action.payload,
       };
 
     case DELETE_EMPLOYEE_SUCCEEDED:
@@ -63,7 +71,7 @@ const EmployeeReducer = (state = initialState, action) => {
       };
 
     // CASE FAIL:
-    case GET_EMPLOYEES_FAILED:
+    case GET_ALL_EMPLOYEE_FAILED:
     case ADD_EMPLOYEE_FAILED:
     case EDIT_EMPLOYEE_FAILED:
     case DELETE_EMPLOYEE_FAILED:

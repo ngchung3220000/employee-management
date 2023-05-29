@@ -1,50 +1,48 @@
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Avatar, Grid, MenuItem, TextField } from "@material-ui/core";
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
-import React, { useState } from "react";
 import { TextValidator } from "react-material-ui-form-validator";
 import DateFnsUtils from "@date-io/date-fns";
 import moment from "moment";
-import { GENDER, TEAMS } from "app/staffManagement/constants/constants";
-import { useSelector } from "react-redux";
+import { GENDER, TEAMS } from "../../constains";
 
 export default function EmployeeForm(props) {
-  const { employee, setEmployee } = props;
+  const { employeeInfo, setEmployeeInfo } = props;
+  const employeeReducer = useSelector((state) => state.employee.employee);
+
+  useEffect(() => {
+    if (employeeReducer?.employeeInfo?.employeeId) {
+      setEmployeeInfo(employeeReducer?.employeeInfo);
+    }
+  }, [employeeReducer?.employeeInfo?.employeeId]);
 
   const handleChangeImg = (e) => {
-    setEmployee({
-      ...employee,
-      employeeInfo: {
-        ...employee.employeeInfo,
-        photoUrl: URL.createObjectURL(e.target.files[0]),
-      },
+    setEmployeeInfo({
+      ...employeeInfo,
+      photoUrl: URL.createObjectURL(e.target.files[0]),
     });
   };
 
   const handleOnChangeValue = (e) => {
-    setEmployee({
-      ...employee,
-      employeeInfo: {
-        ...employee.employeeInfo,
-        [e.target.name]: e.target.value,
-      },
+    setEmployeeInfo({
+      ...employeeInfo,
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleDateChange = (date) => {
-    setEmployee({
-      ...employee,
-      employeeInfo: {
-        ...employee.employeeInfo,
-        dateOfBirth: moment(date).format("YYYY-MM-DD"),
-      },
+    setEmployeeInfo({
+      ...employeeInfo,
+      dateOfBirth: moment(date).format("YYYY-MM-DD"),
     });
   };
 
   return (
-    <Grid container style={{ display: "flex" }}>
+    <Grid container>
       <Grid item xs={4}>
         <Grid
           container
@@ -56,7 +54,7 @@ export default function EmployeeForm(props) {
           }}
         >
           <Avatar
-            src={employee?.employeeInfo?.photoUrl || ""}
+            src={employeeInfo?.photoUrl || ""}
             style={{
               width: "200px",
               height: "200px",
@@ -88,7 +86,7 @@ export default function EmployeeForm(props) {
                 </span>
               }
               type="text"
-              value={employee?.employeeInfo?.fullName || ""}
+              value={employeeInfo?.fullName || ""}
               name="fullName"
               size="small"
               validators={["required", "matchRegexp:^(?! )[^]+(?<! )$"]}
@@ -111,7 +109,7 @@ export default function EmployeeForm(props) {
                 </span>
               }
               type="text"
-              value={employee?.employeeInfo?.code || ""}
+              value={employeeInfo?.code || ""}
               name="code"
               size="small"
               validators={["required", "matchRegexp:^\\S{6,10}$"]}
@@ -133,7 +131,7 @@ export default function EmployeeForm(props) {
                 format="dd/MM/yyyy"
                 label="Ngày sinh"
                 name="dateOfBirth"
-                value={employee?.employeeInfo?.dateOfBirth || null}
+                value={employeeInfo?.dateOfBirth || null}
                 onChange={(e) => handleDateChange(e)}
               />
             </MuiPickersUtilsProvider>
@@ -146,11 +144,7 @@ export default function EmployeeForm(props) {
               variant="outlined"
               size="small"
               label="Giới tính"
-              value={
-                employee?.employeeInfo?.employeeId
-                  ? +employee?.employeeInfo?.gender
-                  : employee?.employeeInfo?.gender || ""
-              }
+              value={employeeInfo?.gender || ""}
               name="gender"
               onChange={handleOnChangeValue}
             >
@@ -175,7 +169,7 @@ export default function EmployeeForm(props) {
                 </span>
               }
               type="text"
-              value={employee?.employeeInfo?.email || ""}
+              value={employeeInfo?.email || ""}
               name="email"
               size="small"
               validators={["required", "isEmail"]}
@@ -195,7 +189,7 @@ export default function EmployeeForm(props) {
                 </span>
               }
               type="text"
-              value={employee?.employeeInfo?.phone || ""}
+              value={employeeInfo?.phone || ""}
               name="phone"
               size="small"
               validators={["required"]}
@@ -219,7 +213,7 @@ export default function EmployeeForm(props) {
                 </span>
               }
               type="text"
-              value={employee?.employeeInfo?.citizenId || ""}
+              value={employeeInfo?.citizenId || ""}
               name="citizenId"
               size="small"
               validators={["required", "isNumber"]}
@@ -235,7 +229,7 @@ export default function EmployeeForm(props) {
               label="Nhóm"
               variant="outlined"
               size="small"
-              value={employee?.employeeInfo?.teamId || ""}
+              value={employeeInfo?.teamId || ""}
               name="teamId"
               onChange={handleOnChangeValue}
             >
@@ -260,7 +254,7 @@ export default function EmployeeForm(props) {
                 </span>
               }
               type="text"
-              value={employee?.employeeInfo?.address || ""}
+              value={employeeInfo?.address || ""}
               name="address"
               size="small"
               validators={["required"]}

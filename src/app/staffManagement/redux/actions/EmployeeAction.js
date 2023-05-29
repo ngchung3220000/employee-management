@@ -8,9 +8,9 @@ import {
   EDIT_EMPLOYEE_FAILED,
   EDIT_EMPLOYEE_REQUESTED,
   EDIT_EMPLOYEE_SUCCEEDED,
-  GET_EMPLOYEES_FAILED,
-  GET_EMPLOYEES_REQUESTED,
-  GET_EMPLOYEES_SUCCEEDED,
+  GET_ALL_EMPLOYEE_FAILED,
+  GET_ALL_EMPLOYEE_REQUESTED,
+  GET_ALL_EMPLOYEE_SUCCEEDED,
   RESET_EMPLOYEE,
   RESET_EMPLOYEE_SUCCEEDED,
   SET_EMPLOYEE,
@@ -49,21 +49,21 @@ export const resetEmployeeActionSucceeded = (payload) => {
 // GET ALL EMPLOYEES
 export const getAllEmployeeRequested = (payload) => {
   return {
-    type: GET_EMPLOYEES_REQUESTED,
+    type: GET_ALL_EMPLOYEE_REQUESTED,
     payload: payload,
   };
 };
 
 export const getAllEmployeeSucceeded = (payload) => {
   return {
-    type: GET_EMPLOYEES_SUCCEEDED,
+    type: GET_ALL_EMPLOYEE_SUCCEEDED,
     payload: payload,
   };
 };
 
 export const getAllEmployeeFailed = (payload) => {
   return {
-    type: GET_EMPLOYEES_FAILED,
+    type: GET_ALL_EMPLOYEE_FAILED,
     payload: payload,
   };
 };

@@ -1,4 +1,4 @@
 {
   "workbench.colorTheme": "Default Dark+",
-  "editor.cursorSmoothCaretAnimation": false
+  "editor.cursorSmoothCaretAnimation": "off"
 }

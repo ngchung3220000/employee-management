@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   AppBar,
   Box,
@@ -15,20 +16,17 @@ import {
 } from "@material-ui/core";
 import { ValidatorForm } from "react-material-ui-form-validator";
 import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
-
 import EmployeeForm from "./InformationForm/EmployeeForm";
 import CertificateForm from "./InformationForm/CertificateForm";
 import FamilyRelationshipForm from "./InformationForm/FamilyRelationshipForm";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { addEmployee } from "app/staffManagement/api/EmployeeServices";
 import {
   addEmployeeRequested,
   editEmployeeRequested,
 } from "app/staffManagement/redux/actions/EmployeeAction";
-import moment from "moment";
-import { create } from "lodash";
+import { FORMAT_DATE_SUBMIT } from "../constains";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import EmployeeRegistDialog from "./EmployeeRegistDialog";
 
 toast.configure({
   autoClose: 2000,
@@ -70,48 +68,62 @@ function a11yProps(index) {
 }
 
 export default function EmployeeDialogSubmit(props) {
-  const { open, close, employee, setEmployee } = props;
+  const { open, close, setReloadData } = props;
   const dispatch = useDispatch();
-  const [value, setValue] = useState(0);
-  console.log(employee);
+  const employeeReducer = useSelector((state) => state.employee.employee);
+  const [tab, setTab] = useState(0);
+  const [hidden, setHidden] = useState(false);
+  const [employee, setEmployeeInfo] = useState({});
+  const [listCertificate, setListCertificate] = useState([]);
+  const [listFamilyRelation, setListFamilyRelation] = useState([]);
+
+  const [openRegistDialog, setOpenRegistDialog] = useState(false)
+
+  console.log(FORMAT_DATE_SUBMIT(employeeReducer?.employeeInfo?.dateOfBirth));
+
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    console.log(employee);
-    employee?.employeeInfo?.employeeId
-      ? dispatch(
-          editEmployeeRequested({
-            ...employee,
-            employeeInfo: {
-              ...employee.employeeInfo,
-              gender: +employee?.employeeInfo?.gender,
+    const formatDateOfCertificates = listCertificate.map((item) => {
+      return {
+        ...item,
+        issuanceDate: FORMAT_DATE_SUBMIT(item.issuanceDate),
+      };
+    });
 
-              dateOfBirth: moment(employee?.employeeInfo?.dateOfBirth).format(
-                "YYYY-MM-DD"
-              ),
-            },
-          })
-        )
-      : dispatch(
-          addEmployeeRequested({
-            ...employee,
-            employeeInfo: {
-              ...employee.employeeInfo,
-              gender: +employee?.employeeInfo?.gender,
-            },
-          })
-        );
-    close();
+    const formatDateOfFamilyRelation = listFamilyRelation.map((item) => {
+      return {
+        ...item,
+        dateOfBirth: FORMAT_DATE_SUBMIT(item.dateOfBirth),
+        familyRelationId: item.employeeId ? item.familyId : "",
+      };
+    });
+
+    const employeeData = {
+      employeeInfo: {
+        ...employee,
+        gender: +employee.gender,
+        dateOfBirth: FORMAT_DATE_SUBMIT(employee.dateOfBirth),
+      },
+      certificates: formatDateOfCertificates,
+      familyRelations: formatDateOfFamilyRelation,
+    };
+
+    employeeReducer?.employeeInfo?.employeeId
+      ? dispatch(editEmployeeRequested(employeeData))
+      : dispatch(addEmployeeRequested(employeeData));
+
+    setHidden(!hidden);
   };
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const handleChangeTab = (event, newValue) => {
+    setTab(newValue);
   };
 
   return (
     <Dialog maxWidth="lg" fullWidth={true} open={open} onClose={close}>
       <DialogTitle style={{ paddingBottom: "10px" }}>
         <span style={{ color: "#1d6d1e" }}>
-          {employee?.employeeInfo?.employeeId
+          {employeeReducer?.employeeInfo?.employeeId
             ? "Sửa nhân viên"
             : "Thêm nhân viên"}
         </span>
@@ -124,40 +136,50 @@ export default function EmployeeDialogSubmit(props) {
       </DialogTitle>
       <ValidatorForm onSubmit={handleOnSubmit}>
         <DialogContent style={{ padding: "10px 0px" }}>
-          {/* <SimpleTabs /> */}
           <AppBar position="static" color="default">
             <Tabs
-              value={value}
-              onChange={handleChange}
+              value={tab}
+              onChange={handleChangeTab}
               aria-label="simple tabs example"
             >
-              <Tab label="Item One" {...a11yProps(0)} />
-              <Tab label="Item Two" {...a11yProps(1)} />
-              <Tab label="Item Three" {...a11yProps(2)} />
+              <Tab label="Thông tin nhân viên" {...a11yProps(0)} />
+              <Tab label="Thông tin văn bằng" {...a11yProps(1)} />
+              <Tab label="Quan hệ gia đình" {...a11yProps(2)} />
             </Tabs>
           </AppBar>
 
-          <TabPanel value={value} index={0}>
-            <EmployeeForm employee={employee} setEmployee={setEmployee} />
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <CertificateForm employee={employee} setEmployee={setEmployee} />
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            <FamilyRelationshipForm
-              employee={employee}
-              setEmployee={setEmployee}
+          <TabPanel value={tab} index={0}>
+            <EmployeeForm
+              employeeInfo={employee}
+              setEmployeeInfo={setEmployeeInfo}
             />
           </TabPanel>
+          <TabPanel value={tab} index={1}>
+            <CertificateForm
+              listCertificate={listCertificate}
+              setListCertificate={setListCertificate}
+            />
+          </TabPanel>
+          <TabPanel value={tab} index={2}>
+            <FamilyRelationshipForm
+              listFamilyRelation={listFamilyRelation}
+              setListFamilyRelation={setListFamilyRelation}
+            />
+          </TabPanel>
+
+          {
+            openRegistDialog && <EmployeeRegistDialog />
+          }
         </DialogContent>
 
         <DialogActions>
           <div className="flex flex-space-between flex-middle mt-10">
             <Button
+              style={{ display: hidden ? "block" : "none" }}
               variant="contained"
               className="mr-12"
               color="secondary"
-              onClick={() => {}}
+              onClick={() => setOpenRegistDialog(true)}
             >
               Đăng ký
             </Button>
@@ -177,7 +199,9 @@ export default function EmployeeDialogSubmit(props) {
               className="mr-12"
               color="primary"
             >
-              {employee?.employeeInfo?.employeeId ? "Sửa nhân viên" : "Lưu"}
+              {employeeReducer?.employeeInfo?.employeeId
+                ? "Sửa nhân viên"
+                : "Lưu"}
             </Button>
           </div>
         </DialogActions>

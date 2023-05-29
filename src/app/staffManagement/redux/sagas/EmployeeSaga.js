@@ -25,7 +25,7 @@ import {
   ADD_EMPLOYEE_REQUESTED,
   DELETE_EMPLOYEE_REQUESTED,
   EDIT_EMPLOYEE_REQUESTED,
-  GET_EMPLOYEES_REQUESTED,
+  GET_ALL_EMPLOYEE_REQUESTED,
   RESET_EMPLOYEE,
   SET_EMPLOYEE,
 } from "../constants/employeeConstant";
@@ -75,9 +75,8 @@ export function* fetchGetAllEmployee(action) {
 function* fetchAddEmployee(action) {
   try {
     const result = yield call(addEmployee, action.payload);
-    console.log(result);
     if (result?.data?.code === SUCCESS) {
-      yield put(addEmployeeSucceeded());
+      yield put(addEmployeeSucceeded(action.payload));
       toast.success(result?.data?.message);
     } else {
       yield put(addEmployeeFailed());
@@ -89,10 +88,9 @@ function* fetchAddEmployee(action) {
 
 function* fetchEditEmployee(action) {
   try {
-    console.log("a");
     const result = yield call(editEmployee, action.payload);
     if (result?.data?.code === SUCCESS) {
-      yield put(editEmployeeSucceeded());
+      yield put(editEmployeeSucceeded(action.payload));
       toast.success(result?.data?.message);
     } else {
       yield put(editEmployeeFailed());
@@ -121,7 +119,7 @@ function* fetchDeleteEmployee(action) {
 export default function* rootEmployeeSaga() {
   yield takeEvery(SET_EMPLOYEE, fetchGetEmployeeById);
   yield takeEvery(RESET_EMPLOYEE, resetEmployee);
-  yield takeEvery(GET_EMPLOYEES_REQUESTED, fetchGetAllEmployee);
+  yield takeEvery(GET_ALL_EMPLOYEE_REQUESTED, fetchGetAllEmployee);
   yield takeEvery(ADD_EMPLOYEE_REQUESTED, fetchAddEmployee);
   yield takeEvery(EDIT_EMPLOYEE_REQUESTED, fetchEditEmployee);
   yield takeEvery(DELETE_EMPLOYEE_REQUESTED, fetchDeleteEmployee);
