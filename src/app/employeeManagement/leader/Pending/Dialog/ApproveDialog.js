@@ -35,7 +35,7 @@ export default function ApproveDialog(props) {
     const data = {
       status: APPROVE_STATUS,
     };
-    dispatch(leaderActionRequest({ id: formEmployee.employeeId, data: data }));
+    dispatch(leaderActionRequest({ id: formEmployee?.employeeId, data: data }));
 
     setReloadData(!reloadData);
     handleClose();

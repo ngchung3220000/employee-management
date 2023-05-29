@@ -12,6 +12,7 @@ import {
 import ApproveDialog from "./Dialog/ApproveDialog";
 import RejectDialog from "./Dialog/RejectDialog";
 import AdditionalRequestDialog from "./Dialog/AdditionalRequestDialog";
+import RegistForm from "app/employeeManagement/components/RegistForm/RegistForm";
 
 export default function PendingDialog(props) {
   const { open, setDialogSubmit, reloadData, setReloadData } = props;
@@ -25,7 +26,7 @@ export default function PendingDialog(props) {
   };
 
   return (
-    <Dialog fullWidth maxWidth="md" open={open} onClose={handleCloseDialog}>
+    <Dialog fullWidth maxWidth="lg" open={open} onClose={handleCloseDialog}>
       <DialogTitle style={{ paddingBottom: "10px" }}>
         <span style={{ color: "#1d6d1e" }}>Thông tin nhân viên</span>
         <IconButton
@@ -36,9 +37,11 @@ export default function PendingDialog(props) {
         </IconButton>
       </DialogTitle>
 
-      <DialogContent>Hồ sơ nhân viên</DialogContent>
+      <div>
+        <RegistForm />
+      </div>
 
-      <DialogActions>
+      <DialogActions style={{ justifyContent: "center" }}>
         <div className="flex flex-space-between flex-middle mt-10">
           <Button
             variant="contained"
@@ -77,7 +80,6 @@ export default function PendingDialog(props) {
           </Button>
         </div>
       </DialogActions>
-
       {dialogApprove && (
         <ApproveDialog
           dialogApprove={dialogApprove}
@@ -86,7 +88,6 @@ export default function PendingDialog(props) {
           setReloadData={setReloadData}
         />
       )}
-
       {dialogAdditionalRequest && (
         <AdditionalRequestDialog
           dialogAdditionalRequest={dialogAdditionalRequest}
@@ -95,7 +96,6 @@ export default function PendingDialog(props) {
           setReloadData={setReloadData}
         />
       )}
-
       {dialogReject && (
         <RejectDialog
           dialogReject={dialogReject}

@@ -33,6 +33,7 @@ export const VIEW_DETAILS_STATUSES = {
 
 export const STATUS_OF_ADD_EMPLOYEE = "1,2,4,6";
 export const STATUS_OF_PENDING = "3";
+export const STATUS_OF_APPROVED = "5";
 
 export const DELETE_STATUS = 1;
 export const ADDITIONAL_REQUESTED_STATUS = 4;

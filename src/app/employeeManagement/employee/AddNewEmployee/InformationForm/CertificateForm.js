@@ -267,6 +267,10 @@ export default function CertificateForm(props) {
         columns={columns}
         data={listCertificate}
         options={{
+          search: false,
+          maxBodyHeight: 300,
+          minBodyHeight: 300,
+          paging: false,
           headerStyle: {
             backgroundColor: "#358600",
             color: "#FFF",

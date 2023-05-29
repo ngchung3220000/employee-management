@@ -17,7 +17,7 @@ import CategoryRoutes from "./views/Category/CategoryRoutes";
 import PendingRoutes from "./employeeManagement/leader/Pending/PendingRoutes";
 import AddNewEmployeeRoutes from "./employeeManagement/employee/AddNewEmployee/AddNewEmployeeRoutes";
 import EmployeeManagementRoutes from "./employeeManagement/employee/EmployeeManagement/EmployeeManagementRoutes";
-
+import ApprovedRoutes from "./employeeManagement/leader/Approved/ApprovedRoutes";
 
 const redirectRoute = [
   {
@@ -42,13 +42,14 @@ const routes = [
   ...pageLayoutRoutes,
   ...MenuRoutes,
   ...AddNewEmployeeRoutes,
-  ...PendingRoutes,
   ...EmployeeManagementRoutes,
+  ...PendingRoutes,
+  ...ApprovedRoutes,
   ...UserRoutes,
   // ...ShiftWorkRouters,
   // ...ColorRoutes,
   ...CategoryRoutes,
-  // ...errorRoute,
+  ...errorRoute,
 ];
 
 export default routes;

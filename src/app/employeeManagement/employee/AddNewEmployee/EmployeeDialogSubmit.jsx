@@ -176,8 +176,8 @@ export default function EmployeeDialogSubmit(props) {
           {openRegistDialog && <EmployeeRegistDialog />}
         </DialogContent>
 
-        <DialogActions>
-          <div className="flex flex-space-between flex-middle mt-10">
+        <DialogActions style={{ justifyContent: "center" }}>
+          <div className="flex flex-space-between flex-middle m-10">
             <Button
               style={{ display: hidden ? "block" : "none" }}
               variant="contained"

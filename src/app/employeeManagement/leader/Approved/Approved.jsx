@@ -1,25 +1,21 @@
+import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import MaterialTable from "material-table";
-import { Breadcrumb } from "egret";
-import { Grid, Icon, IconButton } from "@material-ui/core";
 import {
   STATUSES,
-  STATUS_OF_PENDING,
+  STATUS_OF_APPROVED,
 } from "app/employeeManagement/constants/constants";
+import { Breadcrumb } from "egret";
+import { Button, Grid, Icon, IconButton } from "@material-ui/core";
+import MaterialTable from "material-table";
+import { GENDER } from "app/employeeManagement/employee/constains";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getAllEmployeeRequested,
   getTotalEmployeeCountRequested,
-  getEmployeeById,
-  getFormEmployeeRequested,
 } from "app/employeeManagement/redux/actions/EmployeeAction";
-import moment from "moment";
-import { GENDER } from "app/employeeManagement/employee/constains";
 import Pagination from "app/employeeManagement/components/Pagination/Pagination";
-import "react-toastify/dist/ReactToastify.css";
-import PendingDialog from "./PendingDialog";
 
-export default function Pending() {
+export default function Approved() {
   const dispatch = useDispatch();
   const listEmployee = useSelector((state) => state.employee.listEmployee);
   const totalEmployeeCount = useSelector(
@@ -27,46 +23,33 @@ export default function Pending() {
   );
   const [page, setPage] = useState(0);
   const [rowPerPage, setRowPerPage] = useState(10);
-  const [pendingDialog, setPendingDialog] = useState(false);
-  const [reloadData, setReloadData] = useState(false);
 
   useEffect(() => {
     dispatch(
       getAllEmployeeRequested({
-        status: STATUS_OF_PENDING,
-        page: 1,
-        rowPerPage: 10,
+        status: STATUS_OF_APPROVED,
+        page: page + 1,
+        rowPerPage,
       })
     );
 
-    dispatch(getTotalEmployeeCountRequested(STATUS_OF_PENDING));
-  }, [dispatch, page, rowPerPage, reloadData]);
-
-  const handleOpenPendingDialog = (rowData) => {
-    setPendingDialog(true);
-    dispatch(getFormEmployeeRequested(rowData.employeeId));
-  };
+    dispatch(getTotalEmployeeCountRequested(STATUS_OF_APPROVED));
+  }, [dispatch, page, rowPerPage]);
 
   const columns = [
-    {
-      title: "Thao tác",
-      field: "action",
-      render: (rowData) => {
-        return (
-          <div className="none_wrap">
-            <IconButton
-              size="small"
-              onClick={() => handleOpenPendingDialog(rowData)}
-            >
-              <Icon color="inherit" style={{ fontSize: "20px" }}>
-                visibility
-              </Icon>
-            </IconButton>
-          </div>
-        );
-      },
-      width: "10%",
-    },
+    // {
+    //   title: "Thao tác",
+    //   field: "action",
+    //   render: (rowData) => {
+    //     return (
+    //       <div className="none_wrap">
+    //         <IconButton size="small" onClick={() => {}}>
+    //           <Icon color="inherit">visibility</Icon>
+    //         </IconButton>
+    //       </div>
+    //     );
+    //   },
+    // },
     {
       title: "Tên",
       field: "fullName",
@@ -106,7 +89,7 @@ export default function Pending() {
         <Breadcrumb
           routeSegments={[
             { name: "Lãnh đạo", path: "/" },
-            { name: "Chờ duyệt" },
+            { name: "Đã duyệt" },
           ]}
         />
       </div>
@@ -114,24 +97,20 @@ export default function Pending() {
       <Grid container>
         <Grid item xs={12}>
           <MaterialTable
-            title="Danh sách chờ duyệt"
+            title="Danh sách đã duyệt"
             data={listEmployee}
             columns={columns}
             options={{
               paging: false,
-              exportButton: true,
-              exportAllData: true,
               maxBodyHeight: 568,
               minBodyHeight: 420,
               headerStyle: {
                 backgroundColor: "#358600",
                 color: "#FFF",
-                paddingRight: "0px",
               },
             }}
           />
         </Grid>
-
         <Pagination
           page={page}
           setPage={setPage}
@@ -140,15 +119,6 @@ export default function Pending() {
           totalEmployeeCount={totalEmployeeCount}
         />
       </Grid>
-
-      {pendingDialog && (
-        <PendingDialog
-          open={pendingDialog}
-          setDialogSubmit={setPendingDialog}
-          reloadData={reloadData}
-          setReloadData={setReloadData}
-        />
-      )}
     </div>
   );
 }

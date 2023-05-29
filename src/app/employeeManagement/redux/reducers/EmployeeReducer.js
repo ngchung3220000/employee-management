@@ -19,8 +19,6 @@ import {
   RESET_EMPLOYEE_SUCCEEDED,
   SET_EMPLOYEE,
   SET_EMPLOYEE_SUCCEEDED,
-  SET_LIST_CERTIFICATE,
-  SET_LIST_FAMILY_RELATIONSHIP,
 } from "../constants/employeeConstant";
 
 const initialState = {

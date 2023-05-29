@@ -40,9 +40,9 @@ function Employee() {
   const [dialogSubmit, setDialogSubmit] = useState(false);
   const [dialogDelete, setDialogDelete] = useState(false);
   const [idEmployee, setIdEmployee] = useState();
+  const [reloadData, setReloadData] = useState(false);
   const [page, setPage] = useState(0);
   const [rowPerPage, setRowPerPage] = useState(10);
-  const [reloadData, setReloadData] = useState(false);
 
   useEffect(() => {
     dispatch(
@@ -133,6 +133,7 @@ function Employee() {
           </div>
         );
       },
+      width: "10%",
     },
     {
       title: "Tên",
@@ -202,7 +203,6 @@ function Employee() {
               exportButton: true,
               exportAllData: true,
               maxBodyHeight: 568,
-              minBodyHeight: 568,
               headerStyle: {
                 backgroundColor: "#358600",
                 color: "#FFF",
