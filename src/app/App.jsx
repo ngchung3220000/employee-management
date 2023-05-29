@@ -17,7 +17,7 @@ import AuthGuard from "./auth/AuthGuard";
 import axios from "axios";
 import { toast } from "react-toastify";
 import ConstantList from "../app/appConfig";
-import { Store } from "./staffManagement/redux/Store";
+import { Store } from "./employeeManagement/redux/Store";
 
 // import UserService from "./services/UserService";
 // import httpService from "./services/HttpService";

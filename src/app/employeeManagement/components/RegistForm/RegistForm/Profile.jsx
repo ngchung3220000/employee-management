@@ -23,14 +23,9 @@ const MyTitle = styled(Typography)({
 function Profile(props) {
     const { cvData, setCvData, employeeInfo } = props;
 
-    // useEffect(() => {
-    //     setCvData({
-    //         careerGoal: '',
-    //         skill: '',
-    //         hobby: '',
-    //         workExperiances: []
-    //     })
-    // }, [])
+    useEffect(() => {
+
+    }, [])
 
     const handleIncrementWorkExperiences = () => {
         let newArray = [...(cvData?.workExperiances || []), {

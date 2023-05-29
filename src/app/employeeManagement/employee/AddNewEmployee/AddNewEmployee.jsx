@@ -20,10 +20,10 @@ import {
   STATUSES,
   STATUS_OF_ADD_EMPLOYEE,
   VIEW_DETAILS_STATUSES,
-} from "app/staffManagement/constants/constants";
+} from "app/employeeManagement/constants/constants";
 import "react-toastify/dist/ReactToastify.css";
 import { GENDER } from "../constains";
-import Pagination from "app/staffManagement/components/Pagination/Pagination";
+import Pagination from "app/employeeManagement/components/Pagination/Pagination";
 
 toast.configure({
   autoClose: 2000,

@@ -14,8 +14,10 @@ import TimeSheetRoutes from "./views/TimeSheet/TimeSheetRoutes";
 import ColorRoutes from "./views/Color/ColorRoutes";
 import CategoryRoutes from "./views/Category/CategoryRoutes";
 
-import EmployeeRoutes from "./staffManagement/staff/Employee/EmployeeRoutes";
-import PendingRoutes from "./staffManagement/leader/Pending/PendingRoutes";
+import PendingRoutes from "./employeeManagement/leader/Pending/PendingRoutes";
+import AddNewEmployeeRoutes from "./employeeManagement/employee/AddNewEmployee/AddNewEmployeeRoutes";
+import EmployeeManagementRoutes from "./employeeManagement/employee/EmployeeManagement/EmployeeManagementRoutes";
+
 
 const redirectRoute = [
   {
@@ -39,8 +41,9 @@ const routes = [
   // ...departmentRoutes,
   ...pageLayoutRoutes,
   ...MenuRoutes,
-  ...EmployeeRoutes,
+  ...AddNewEmployeeRoutes,
   ...PendingRoutes,
+  ...EmployeeManagementRoutes,
   ...UserRoutes,
   // ...ShiftWorkRouters,
   // ...ColorRoutes,

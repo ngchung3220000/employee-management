@@ -22,7 +22,7 @@ import FamilyRelationshipForm from "./InformationForm/FamilyRelationshipForm";
 import {
   addEmployeeRequested,
   editEmployeeRequested,
-} from "app/staffManagement/redux/actions/EmployeeAction";
+} from "app/employeeManagement/redux/actions/EmployeeAction";
 import { FORMAT_DATE_SUBMIT } from "../constains";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -160,18 +160,6 @@ export default function EmployeeDialogSubmit(props) {
             <EmployeeForm
               employeeInfo={employee}
               setEmployeeInfo={setEmployeeInfo}
-            />
-          </TabPanel>
-          <TabPanel value={tab} index={1}>
-            <CertificateForm
-              listCertificate={listCertificate}
-              setListCertificate={setListCertificate}
-            />
-          </TabPanel>
-          <TabPanel value={tab} index={2}>
-            <FamilyRelationshipForm
-              listFamilyRelation={listFamilyRelation}
-              setListFamilyRelation={setListFamilyRelation}
             />
           </TabPanel>
           <TabPanel value={tab} index={1}>

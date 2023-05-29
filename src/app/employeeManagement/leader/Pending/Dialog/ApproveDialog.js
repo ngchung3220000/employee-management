@@ -1,44 +1,39 @@
 import React, { useState } from "react";
 import {
   Button,
+  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControlLabel,
   Grid,
   Icon,
   IconButton,
   TextField,
 } from "@material-ui/core";
-import DateFnsUtils from "@date-io/date-fns";
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
-import { REJECT_STATUS } from "app/staffManagement/constants/constants";
+import DateFnsUtils from "@date-io/date-fns";
 import { useDispatch, useSelector } from "react-redux";
-import { leaderActionRequest } from "app/staffManagement/redux/actions/EmployeeAction";
+import { leaderActionRequest } from "app/employeeManagement/redux/actions/EmployeeAction";
+import { APPROVE_STATUS } from "app/employeeManagement/constants/constants";
 
-export default function RejectDialog(props) {
-  const { dialogReject, setDialogReject, reloadData, setReloadData } = props;
+export default function ApproveDialog(props) {
+  const { dialogApprove, setDialogApprove, reloadData, setReloadData } = props;
   const dispatch = useDispatch();
   const formEmployee = useSelector((state) => state.employee.formEmployee);
-
-  const [rejectedReason, setRejectReason] = useState("");
-  const [rejectionDate, setRejectionDate] = useState(null);
-
-  const handleChangRejectedReason = (e) => {
-    setRejectReason(e.target.value);
-  };
+  const [appointmentDate, setAppointmentDate] = useState(null);
 
   const handleDateChange = (date) => {
-    setRejectionDate(date);
+    setAppointmentDate(date);
   };
 
   const handleOnSubmit = () => {
     const data = {
-      status: REJECT_STATUS,
-      rejectedReason: rejectedReason,
+      status: APPROVE_STATUS,
     };
     dispatch(leaderActionRequest({ id: formEmployee.employeeId, data: data }));
 
@@ -47,15 +42,14 @@ export default function RejectDialog(props) {
   };
 
   const handleClose = () => {
-    setDialogReject(false);
-    setRejectReason("");
-    setRejectionDate(null);
+    setDialogApprove(false);
+    setAppointmentDate(null);
   };
 
   return (
-    <Dialog fullWidth maxWidth="sm" open={dialogReject} onClose={handleClose}>
+    <Dialog maxWidth="sm" fullWidth open={dialogApprove} onClose={handleClose}>
       <DialogTitle>
-        <span>Từ chối</span>
+        <span>Phê duyệt</span>
         <IconButton
           style={{ position: "absolute", right: "10px", top: "10px" }}
           onClick={handleClose}
@@ -74,27 +68,18 @@ export default function RejectDialog(props) {
                 size="small"
                 disableToolbar
                 format="dd/MM/yyyy"
-                label="Ngày từ chối"
-                name="rejectionDate"
-                value={rejectionDate}
+                label="Ngày hẹn"
+                name="appointmentDate"
+                value={appointmentDate}
                 onChange={(e) => handleDateChange(e)}
               />
             </MuiPickersUtilsProvider>
           </Grid>
-
           <Grid item xs={12}>
-            <TextField
-              fullWidth
-              multiline
-              size="small"
-              type="text"
-              name="rejectedReason"
-              label="Nội dung"
-              variant="outlined"
-              value={rejectedReason}
-              onChange={handleChangRejectedReason}
-              error={!rejectedReason}
-              helperText={rejectedReason ? "" : "Vui lòng nhập nội dung"}
+            {" "}
+            <FormControlLabel
+              control={<Checkbox defaultChecked />}
+              label="Đã đủ điều kiện phê duyệt"
             />
           </Grid>
         </Grid>

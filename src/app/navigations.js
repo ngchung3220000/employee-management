@@ -12,16 +12,22 @@ export const navigations = [
     isVisible: true,
     icon: "engineering",
     children: [
+      // {
+      //   name: "manage.user",
+      //   isVisible: true,
+      //   path: ConstantList.ROOT_PATH + "user_manager/user",
+      //   icon: "keyboard_arrow_right",
+      // },
       {
-        name: "manage.user",
+        name: "manage.addNewEmployee",
         isVisible: true,
-        path: ConstantList.ROOT_PATH + "user_manager/user",
+        path: ConstantList.ROOT_PATH + "list/addNewEmployee",
         icon: "keyboard_arrow_right",
       },
       {
-        name: "manage.employee",
+        name: "manage.employeeManagement",
         isVisible: true,
-        path: ConstantList.ROOT_PATH + "list/employee",
+        path: ConstantList.ROOT_PATH + "list/employeeManagement",
         icon: "keyboard_arrow_right",
       },
     ],
