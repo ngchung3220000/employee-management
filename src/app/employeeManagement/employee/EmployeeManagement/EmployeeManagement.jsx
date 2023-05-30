@@ -1,12 +1,48 @@
 import moment from "moment";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { GENDER } from "../constains";
-import { STATUSES } from "app/employeeManagement/constants/constants";
+import {
+  STATUSES,
+  STATUS_OF_APPROVED,
+} from "app/employeeManagement/constants/constants";
 import { Breadcrumb } from "egret";
-import { Button, Grid, Icon, IconButton } from "@material-ui/core";
+import { Button, Grid, Icon, IconButton, Tooltip } from "@material-ui/core";
 import MaterialTable from "material-table";
+import Pagination from "app/employeeManagement/components/Pagination/Pagination";
+import {
+  getAllEmployeeRequested,
+  getTotalEmployeeCountRequested,
+} from "app/employeeManagement/redux/actions/EmployeeAction";
+import { useDispatch, useSelector } from "react-redux";
+import EmployeeManagementDialog from "./EmployeeManagementDialog";
 
 export default function EmployeeManagement() {
+  const dispatch = useDispatch();
+  const listEmployee = useSelector((state) => state.employee.listEmployee);
+  const totalEmployeeCount = useSelector(
+    (state) => state.employee.totalEmployeeCount
+  );
+  const [page, setPage] = useState(0);
+  const [rowPerPage, setRowPerPage] = useState(10);
+  const [dialogUpdate, setDialogUpdate] = useState(false);
+  const [dialogInfo, setDialogInfo] = useState(false);
+
+  useEffect(() => {
+    dispatch(
+      getAllEmployeeRequested({
+        status: STATUS_OF_APPROVED,
+        page: page + 1,
+        rowPerPage,
+      })
+    );
+
+    dispatch(getTotalEmployeeCountRequested(STATUS_OF_APPROVED));
+  }, [dispatch, page, rowPerPage]);
+
+  const handleOpenDialogUpdate = () => {
+    setDialogUpdate(true);
+  };
+
   const columns = [
     {
       title: "Thao tác",
@@ -14,17 +50,20 @@ export default function EmployeeManagement() {
       render: (rowData) => {
         return (
           <div className="none_wrap">
-            <IconButton size="small" onClick={() => {}}>
-              <Icon color="primary">edit</Icon>
-            </IconButton>
+            <Tooltip title="Cập nhật diễn biến" className="pr-10">
+              <IconButton
+                size="small"
+                onClick={() => handleOpenDialogUpdate(rowData)}
+              >
+                <Icon color="primary">update</Icon>
+              </IconButton>
+            </Tooltip>
 
-            <IconButton size="small" onClick={() => {}}>
-              <Icon style={{ color: "red" }}>delete</Icon>
-            </IconButton>
-
-            <IconButton size="small" onClick={() => {}}>
-              <Icon color="inherit">visibility</Icon>
-            </IconButton>
+            <Tooltip title="Xem thông tin">
+              <IconButton size="small" onClick={() => {}}>
+                <Icon color="inherit">visibility</Icon>
+              </IconButton>
+            </Tooltip>
           </div>
         );
       },
@@ -76,7 +115,7 @@ export default function EmployeeManagement() {
       <Grid container>
         <Grid item xs={12}>
           <MaterialTable
-            data={[]}
+            data={listEmployee}
             columns={columns}
             options={{
               paging: false,
@@ -90,7 +129,21 @@ export default function EmployeeManagement() {
               },
             }}
           />
+
+          {dialogUpdate && (
+            <EmployeeManagementDialog
+              dialogUpdate={dialogUpdate}
+              setDialogUpdate={setDialogUpdate}
+            />
+          )}
         </Grid>
+        <Pagination
+          page={page}
+          setPage={setPage}
+          rowPerPage={rowPerPage}
+          setRowPerPage={setRowPerPage}
+          totalEmployeeCount={totalEmployeeCount}
+        />
       </Grid>
     </div>
   );

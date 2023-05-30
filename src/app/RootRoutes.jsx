@@ -49,7 +49,7 @@ const routes = [
   // ...ShiftWorkRouters,
   // ...ColorRoutes,
   ...CategoryRoutes,
-  ...errorRoute,
+  // ...errorRoute,
 ];
 
 export default routes;

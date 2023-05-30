@@ -45,6 +45,7 @@ export default function Pending() {
   const handleOpenPendingDialog = (rowData) => {
     setPendingDialog(true);
     dispatch(getFormEmployeeRequested(rowData.employeeId));
+    dispatch(getEmployeeById(rowData.employeeId));
   };
 
   const columns = [

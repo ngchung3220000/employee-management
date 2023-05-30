@@ -36,6 +36,7 @@ export const STATUS_OF_PENDING = "3";
 export const STATUS_OF_APPROVED = "5";
 
 export const DELETE_STATUS = 1;
+export const PENDING_STATUS = 3;
 export const ADDITIONAL_REQUESTED_STATUS = 4;
 export const APPROVE_STATUS = 5;
 export const REJECT_STATUS = 6;

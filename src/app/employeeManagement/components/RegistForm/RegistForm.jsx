@@ -9,7 +9,6 @@ import Box from "@material-ui/core/Box";
 import Profile from "./RegistForm/Profile";
 import Resume from "./RegistForm/Resume";
 import Diploma from "./RegistForm/Diploma";
-import { useSelector } from "react-redux";
 
 import { useSelector } from "react-redux";
 import { DialogContent } from "@material-ui/core";

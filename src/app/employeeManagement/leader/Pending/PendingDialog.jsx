@@ -17,6 +17,7 @@ import RegistForm from "app/employeeManagement/components/RegistForm/RegistForm"
 export default function PendingDialog(props) {
   const { open, setDialogSubmit, reloadData, setReloadData } = props;
   const formEmployee = useSelector((state) => state.employee.formEmployee);
+  const employee = useSelector((state) => state.employee.employee);
   const [dialogApprove, setDialogApprove] = useState(false);
   const [dialogAdditionalRequest, setDialogAdditionalRequest] = useState(false);
   const [dialogReject, setDialogReject] = useState(false);
@@ -38,7 +39,7 @@ export default function PendingDialog(props) {
       </DialogTitle>
 
       <div>
-        <RegistForm />
+        <RegistForm formEmployee={formEmployee} employee={employee} />
       </div>
 
       <DialogActions style={{ justifyContent: "center" }}>

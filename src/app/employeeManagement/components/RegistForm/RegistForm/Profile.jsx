@@ -14,6 +14,7 @@ import PhoneIcon from "@material-ui/icons/Phone";
 import RoomIcon from "@material-ui/icons/Room";
 import DateRangeIcon from "@material-ui/icons/DateRange";
 import "./Profile.css";
+import { PENDING_STATUS } from "app/employeeManagement/constants/constants";
 
 const MyTitle = styled(Typography)({
   color: "inherit",
@@ -22,10 +23,10 @@ const MyTitle = styled(Typography)({
 });
 
 function Profile(props) {
-  const { formEmployee, setFormEmployee } = props.props;
+  const { formEmployee, setFormEmployee, employee } = props.props;
   // console.log(formEmployee?.cv?.workExperiences);
   // console.log("regist", formEmployee);
-  // console.log(formEmployee?.cv);
+  console.log(formEmployee);
   // useEffect(() => {
   //     // console.log(formEmployee?.cv);
   //     setFormEmployee(formEmployee?.cv);
@@ -90,7 +91,16 @@ function Profile(props) {
   };
 
   return (
-    <Grid container xs={12} spacing={3} justifyContent="space-between">
+    <Grid
+      container
+      xs={12}
+      spacing={3}
+      justifyContent="space-between"
+      style={{
+        pointerEvents:
+          employee?.employeeInfo?.status === PENDING_STATUS ? "none" : "",
+      }}
+    >
       <Grid
         item
         container
